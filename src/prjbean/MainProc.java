@@ -146,6 +146,42 @@ public class MainProc extends HttpServlet {
 		}
 	}
 	
+	public QuizUserDTO getUser(HttpServletRequest req, String user_Name){
+		
+		QuizUserDTO dto = new QuizUserDTO();
+		
+		try {
+			con = ds.getConnection();
+			
+			session = req.getSession();
+			
+			String sql = "select * from user where user_id = ?";
+			pstmt = con.prepareStatement(sql);  
+			pstmt.setString(1, user_Name);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				dto.setUser_Id(rs.getString("user_Id"));
+				dto.setUser_Email(rs.getString("user_Email"));
+				dto.setUser_Password(rs.getString("user_Password"));
+				dto.setUser_Name(rs.getString("user_Name"));
+				dto.setUser_Address(rs.getString("user_Address"));
+				dto.setUser_Phone_Number(rs.getString("user_Phone_Number"));
+				dto.setUser_Total_Point(rs.getInt("user_Total_Point"));
+				dto.setUser_Current_Point(rs.getInt("user_Current_Point"));
+				dto.setUser_Month_Point(rs.getInt("user_Month_Point"));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			freeConnection();
+		}
+		return dto;
+	}
+	
 	// 테스트(변경해도 됨)
 	public void selectUser(String user_Name){
 		
