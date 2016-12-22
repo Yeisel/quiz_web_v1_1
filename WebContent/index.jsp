@@ -55,7 +55,7 @@ strong, b{
 									<form method="post" action="login.do" name="logo">
 										<input type="hidden" name="user_Id" value="<%=session.getAttribute("logged")%>"/>
 										<input type="hidden" name="home" value="<%=session.getAttribute("logged")%>"/>
-										<input type="image" name="Submit" src="images/pic01.jpg">
+										<input type="image" name="Submit" src="images/quizbook.jpg">
 										<!-- <a href="login.do" onclick="$(this).closest('logo').submit()" class="logo"><strong style="font-size:60px;">QuizBook</strong></a> -->
 									</form>
 								</header>
