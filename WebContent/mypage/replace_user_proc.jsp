@@ -8,41 +8,26 @@
 </head>
 <body>
 <%request.setCharacterEncoding("utf-8");%>
-
 <jsp:useBean id="dao" class="prjbean.MainProc"></jsp:useBean>
 <jsp:useBean id="dto" class="prjdata.QuizUserDTO"></jsp:useBean>
-
 <jsp:setProperty property="*" name="dto"/>
-
 <%
-	if(request.getParameter("policy") != null){
-		if(dto.getUser_Password().equals(request.getParameter("pass_confirm"))){
-			dao.inputNewUser(dto);
+	if(dto.getUser_Password().equals(request.getParameter("pass_confirm"))){
+		dao.replaceUser(dto);
 %>
 <script>
-	alert("축하합니다~ QUIZ BOOK의 회원이 되셨네요.");
-	location.href="../index.jsp";
+	alert("정상 수정 되었습니다.");
+	window.close();
 </script>
 <%
-		}
-		else{
-%>
-			<script>
-				alert("패스워드를 다시 확인 해 주세요.");
-				location.href="javascript:parent.fnPageMove('mypage/join_new.jsp')";
-			</script>
-<%
-		}
 	}
 	else{
 %>
-		<script>
-			alert("약관에 동의 하여야 회원 가입이 가능합니다.");
-			location.href="javascript:parent.fnPageMove('mypage/join_new.jsp')";
-		</script>
+<script>
+	alert("패스워드를 확인 해 주세요.");
+</script>
 <%
 	}
-		
 %>
 </body>
 </html>

@@ -146,6 +146,7 @@ public class MainProc extends HttpServlet {
 		}
 	}
 	
+	// 특정 user의 DB 값 꺼내오기
 	public QuizUserDTO getUser(HttpServletRequest req, String user_Name){
 		
 		QuizUserDTO dto = new QuizUserDTO();
@@ -180,6 +181,34 @@ public class MainProc extends HttpServlet {
 			freeConnection();
 		}
 		return dto;
+	}
+	
+	// 회원 정보 수정(mypage/replace_user_info.jsp, mypage/replace_user_proc.jsp)
+	public void replaceUser(QuizUserDTO dto){
+		
+		try{
+			con = ds.getConnection();
+			
+			System.out.println("여기는 replaceUser(QuizUserDTO dto) : " + dto.getUser_Email() + ", " + dto.getUser_Password() + ", " +  dto.getUser_Id());
+			
+			String sql = "UPDATE user SET user_email=?, user_password=?, user_address=?, user_phone_number=? WHERE user_id=?";
+			
+			pstmt = con.prepareStatement(sql);  
+						
+			pstmt.setString(1, dto.getUser_Email());
+			pstmt.setString(2, dto.getUser_Password());			
+			pstmt.setString(3, dto.getUser_Address());
+			pstmt.setString(4, dto.getUser_Phone_Number());
+			pstmt.setString(5, dto.getUser_Id());
+			
+			pstmt.executeUpdate();
+		}
+		catch(Exception err){
+			err.printStackTrace();
+		}
+		finally{
+			freeConnection();
+		}
 	}
 	
 	// 테스트(변경해도 됨)

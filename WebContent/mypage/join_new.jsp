@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -46,7 +46,7 @@ $( function() {
 <style>
 h1, h2, h3, h4, h5, h6{
 	color:#3d4449;
-	font-family: "¸¼Àº °íµñ";
+	font-family: "ë§‘ì€ ê³ ë”•";
 	font-weight:800;
 	line-height:1.5;
 	margin:0 0 1em 0;
@@ -54,12 +54,12 @@ h1, h2, h3, h4, h5, h6{
 strong, b{
 	color:#3d4449;
 	font-weight: 600;
-	font-family: "¸¼Àº °íµñ";
+	font-family: "ë§‘ì€ ê³ ë”•";
 }
 </style>
 </head>
 <body>
-<strong style="font-size:100px; color:indianred; font-weight:1000;"> ** ½Å±Ô È¸¿ø °¡ÀÔ ** </strong>
+<strong style="font-size:100px; color:indianred; font-weight:1000;"> ** ì‹ ê·œ íšŒì› ê°€ì… ** </strong>
 <br/><br/><br/><br/>
 
 <form method="post" action="javascript:parent.fnPageMove('mypage/join_new_proc.jsp')">
@@ -108,7 +108,7 @@ strong, b{
 	<br/><br/><br/>
 	<label>*. QUIZ BOOK POLICY for USER.</label>
 	<select multiple class="form-control" style="width:1000px; height:600px;">
-	  <option>1. °ü¸®ÀÚ´Ô²² ¿åÇÏ¸é °­Åğ.</option>
+	  <option>1. ê´€ë¦¬ìëŠ” ì™•ì´ë‹¤.</option>
 	  <option>2</option>
 	  <option>3</option>
 	  <option>4</option>
@@ -116,9 +116,9 @@ strong, b{
 	</select>
 	<div class="checkbox">
 		<input type="checkbox" id="policy" name="policy" value="policy"/>
-		<label for="policy">¾à°ü¿¡ µ¿ÀÇ ÇÔ.</label>
+		<label for="policy">ì•½ê´€ì— ë™ì˜ í•¨.</label>
 	</div>
-	<button type="submit"><strong style="font-size:18px; color:DarkMagenta;">È¸¿ø °¡ÀÔ ½ÅÃ»</strong></button>
+	<button type="submit"><strong style="font-size:18px; color:DarkMagenta;">íšŒì› ê°€ì…</strong></button>
 </form>
 </body>
 </html>

@@ -42,6 +42,14 @@ strong, b{
 </style>
 </head>
 	<body>
+	<%request.setCharacterEncoding("utf-8");%>
+	
+	<jsp:useBean id="dao" class="prjbean.MainProc"></jsp:useBean>
+	<jsp:useBean id="dto" class="prjdata.QuizUserDTO"></jsp:useBean>
+
+<%
+	dto = dao.getUser(request, (String)request.getSession().getAttribute("logged"));
+%>
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -98,7 +106,7 @@ strong, b{
 
 								<section id="login" class="alt">
 <%         
-			QuizUserDTO dto = (QuizUserDTO)request.getAttribute("dto");
+			// QuizUserDTO dto = (QuizUserDTO)request.getAttribute("dto");
 			
 			if(session.getAttribute("logged") == null){
 %>	

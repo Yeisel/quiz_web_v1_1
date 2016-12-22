@@ -1,19 +1,25 @@
 <%@page import="prjdata.QuizUserDTO"%>
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<script>
+	function fnPopup(url, window_name){
+		window.open(url, window_name, "width=800, height=600, left=500, top=200");
+	}
+</script>
 </head>
 <body>
+<%request.setCharacterEncoding("utf-8");%>
 <jsp:useBean id="dao" class="prjbean.MainProc"></jsp:useBean>
 <jsp:useBean id="dto" class="prjdata.QuizUserDTO"></jsp:useBean>
 
 <%
 	dto = dao.getUser(request, (String)request.getSession().getAttribute("logged"));
 %>
-	<strong style="font-size:100px; color:indianred; font-weight:1000;"> ** QUIZ BOOK ΘΈΏψ Α¤ΊΈ ** </strong>
+	<strong style="font-size:100px; color:indianred; font-weight:1000;"> ** QUIZ BOOK νμ› μ •λ³΄ ** </strong>
 	<br/><br/><br/><br/>
 	
 	<div style="display:flex;">
@@ -46,28 +52,31 @@
 		<div style="flex:4"><label style="color:maroon;"><%=dto.getUser_Address()%></label></div>
 		<div style="flex:4"></div>
 	</div><br/>
-	<form method="post" action="javascript:parent.fnPageMove('mypage/my_main_proc.jsp')">
+	<form method="post" action="javascript:parent.fnPageMove('mypage/my_main.jsp')">
 		<div style="display:flex;">
-			<div style="flex:1"><strong style="font-size:18px; color:darkblue;">ΓΡ ΘΉµζ ΖχΐΞΖ®</strong></div>
+			<input type="hidden" name="user_Id" value="<%=session.getAttribute("logged")%>"/>
+			<div style="flex:1"><strong style="font-size:18px; color:darkblue;">μ΄ νλ“ ν¬μΈνΈ</strong></div>
 			<div style="flex:1"></div>
 			<div style="flex:4"><label style="color:midnightblue;"><%=dto.getUser_Total_Point()%></label></div>
-			<div style="flex:4"><button type="submit"><strong style="font-size:13px; color:red;">°³ΐΞ Α¤ΊΈ Ί―°ζ</strong></button></div>
+			<div style="flex:4"><button type="submit" onclick="fnPopup('mypage/replace_user_info.jsp', 'κ°μΈ μ •λ³΄ λ³€κ²½')"><strong style="font-size:13px; color:red;">κ°μΈ μ •λ³΄ λ³€κ²½</strong></button></div>
 		</div><br/>
 	</form>
 	<form method="post" action="javascript:parent.fnPageMove('mypage/my_main_proc.jsp')">
 		<div style="display:flex;">
-			<div style="flex:1"><strong style="font-size:18px; color:darkblue;">»ηΏλΗΡ ΖχΐΞΖ®</strong></div>
+			<input type="hidden" name="user_Id" value="<%=session.getAttribute("logged")%>"/>
+			<div style="flex:1"><strong style="font-size:18px; color:darkblue;">μ‚¬μ©ν• ν¬μΈνΈ</strong></div>
 			<div style="flex:1"></div>
 			<div style="flex:4"><label style="color:midnightblue;"><%=dto.getUser_Total_Point() - dto.getUser_Current_Point()%></label></div>
-			<div style="flex:4"><button type="submit"><strong style="font-size:13px; color:red;">ΔϋΑξ Θχ½Ί ΕδΈ®</strong></button></div>
+			<div style="flex:4"><button type="submit"><strong style="font-size:13px; color:red;">ν€΄μ¦ νμ¤ ν† λ¦¬</strong></button></div>
 		</div><br/>
 	</form>
 	<form method="post" action="javascript:parent.fnPageMove('mypage/my_main_proc.jsp')">
 		<div style="display:flex;">
-			<div style="flex:1"><strong style="font-size:18px; color:darkblue;">ΊΈΐ― ΖχΐΞΖ®</strong></div>
+			<input type="hidden" name="user_Id" value="<%=session.getAttribute("logged")%>"/>
+			<div style="flex:1"><strong style="font-size:18px; color:darkblue;">λ³΄μ  ν¬μΈνΈ</strong></div>
 			<div style="flex:1"></div>
 			<div style="flex:4"><label style="color:midnightblue;"><%=dto.getUser_Current_Point()%></label></div>
-			<div style="flex:4"><button type="submit"><strong style="font-size:13px; color:red;">±ΈΈΕ ³»Ώª Α¶ΘΈ</strong></button></div>
+			<div style="flex:4"><button type="submit"><strong style="font-size:13px; color:red;">κµ¬λ§¤ λ‚΄μ—­ μ΅°ν</strong></button></div>
 		</div><br/>
 	</form>
 </body>
