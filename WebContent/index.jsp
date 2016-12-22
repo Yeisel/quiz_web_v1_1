@@ -56,13 +56,13 @@ strong, b{
 								</header>
 
 							<!-- Banner -->
-								<section id="banner">
+								<section >
 									<div class="here" id="here">
 									<header>
 										<span class="image object" style="float:right;">
-											<img src="images/pic10.jpg" alt="" />
+											<img src="images/pic10.jpg" alt="이미지" />
 										</span>	
-										<h2>QuizBook에 오신 것을 환영합니다.<br />
+										<h2>QuizBook에 오신 것을 환영합니다.<br/>
 										by FirstClass Team</h2>
 	
 										<!-- <p>다양한 퀴즈에 도전해보세요</p> -->

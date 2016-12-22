@@ -1,6 +1,6 @@
 <%@page import="prjdata.QuizProductDTO"%>
 <%@page import="java.util.List"%>
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +23,7 @@
         <!-- Page Header -->
         <div >
             <div >
-                <h2 class="page-header">∆˜¿Œ∆Æ ∏Ù
+                <h2 class="page-header">Ìè¨Ïù∏Ìä∏Î™∞
                 </h2>
             </div>
         </div>
@@ -35,13 +35,13 @@
 		QuizProductDTO dto = (QuizProductDTO)list.get(i);
 %>
         <div >
-        	<a href="javascript:parent.fnPageMove('shop/shop_detail.jsp')">
+        	<a href="javascript:parent.fnPageMove('shop/shop_detail.jsp?product_Number=<%=dto.getProduct_Number()%>')">
 	
         	<div style="display:flex; border-bottom:1px dotted red; margin-bottom:5px;">
 
  
 	            <div style="flex-basis:200px;">
-	                <img src="images/pic01.jpg" style="width:200px; height:100px;">
+	                <img src=<%=dto.getProduct_Image()%> style="width:200px; height:100px;">
 	            </div>
 	            <div align="center" style="flex-basis:600px; width:600px;">
 	                <br/><h3><%=dto.getProduct_Name()%></h3>

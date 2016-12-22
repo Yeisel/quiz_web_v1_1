@@ -1,33 +1,66 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@page import="prjdata.QuizProductDTO"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+
 </head>
 <body>
-		<h3>»óÇ°¸í <%="»óÇ°¸í" %></h3>
-<!-- »óÇ°ÀÌ¹ÌÁö -->
+<jsp:useBean id="dao" class="prjbean.MainProc"/>
+<%
+	request.setCharacterEncoding("UTF-8");
+	int product_Number = Integer.parseInt(request.getParameter("product_Number"));
+	System.out.println(product_Number);
+	QuizProductDTO dto = dao.getProduct(product_Number);
+	String userId = (String)session.getAttribute("logged");
+%>	
+
+		<h3>ìƒí’ˆëª…<%=dto.getProduct_Name() %></h3>
+		
+<!-- ìƒí’ˆì´ë¯¸ì§€ -->
  	<div style="display:flex; border-top:1px solid black;border-bottom:1px solid black;" >
 		<div class="thumbBox" style="flex:1; padding:10px;" >
-				<span ><img src="images/pic01.jpg" alt="»óÇ°ÀÌ¹ÌÁö" style="width:350px; height:270px;"></span>
+				<span ><img src=<%=dto.getProduct_Image() %> alt="ìƒí’ˆì´ë¯¸ì§€" style="width:350px; height:270px;"></span>
 		</div>
+
+
 		<div style="flex:2">
-			<div style="height:50px; background:#eff1f2; "><strong>°¡°İ : <%="°¡°İ" %></strong></div>
-			<div style="height:50px;"><%="»óÇ°¼³¸í" %></div>
-			<div style="height:50px;">Á¦Á¶»ç : <%="Á¦Á¶»ç" %></div>
-			<div style="height:50px;">»óÇ°¹øÈ£ : <%="»óÇ°¹øÈ£" %></div>
-			<div style="height:50px;">Âü°í»çÇ× : <%="Âü°í»çÇ×" %></div>
+			<div style="height:50px; background:#eff1f2; "><strong>ê°€ê²© : <%=dto.getProduct_Price() %> P</strong></div>
+			<div style="height:50px;"><%=dto.getProduct_Contents() %></div>
+			<div style="height:50px;">ì œì¡°ì‚¬ : <%=dto.getProduct_Company() %></div>
+			<div style="height:50px;">ìƒí’ˆë²ˆí˜¸ : <%=dto.getProduct_Number() %></div>
+			<div style="height:50px;">ì°¸ê³ ì‚¬í•­ : </div>
 		</div>
 	</div>
+	
 	<div style="margin:30px;">
-		<div style="float:left"><a href="index.jsp"><button>Ã³À½À¸·Î</button></a></div>
-		<div style="float:right;"><a href="javascript:parent.fnPageMove('shop/shop_cart.jsp')"><button>Àå¹Ù±¸´Ï</button></a></div>
-		<div style="float:right; margin-right:30px;"><a href="javascript:parent.fnPageMove('shop/shop_cart.jsp')"><button>±¸¸ÅÇÏ±â</button></a></div>
-		
+		<div style="float:left"><a href="index.jsp"><button>ì²˜ìŒìœ¼ë¡œ</button></a></div>
+		<div style="float:left; margin-left:20px;"><a href="javascript:parent.fnPageMove('shop/shop_main.jsp')"><button>ì´ì „ìœ¼ë¡œ</button></a></div>
+		<form action="javascript:fnCart()">		
+			<div style="float:right;"><button>ì¥ë°”êµ¬ë‹ˆ</button></div>
+			<input type="hidden" id="session" value="<%=userId %>"></input>
+			<input type="hidden" id="pnum" name="pnum" value="<%=dto.getProduct_Number()%>"><%=dto.getProduct_Number()%></input>
+		<div style="float:right; margin-right:20px;"><button>êµ¬ë§¤í•˜ê¸°</button></div>
+		</form>			
 	</div>
-
-
+	
+<script>
+	function fnBack(){
+		history.back();
+	}
+	function fnCart(){
+		var id = document.getElementById("session").value;
+		if(id == "null" || id == null){
+			alert("ë¡œê·¸ì¸ í›„ ì‚¬ìš©í•´ì£¼ì„¸ìš”.");
+		}
+		else{
+			alert(id);
+			parent.fnPageMove('shop/shop_cart.jsp?product_Number=<%=dto.getProduct_Number()%>');
+		}
+	}
+</script>
 		
 </body>
 </html>

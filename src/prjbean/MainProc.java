@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import prjdata.QuizCartDTO;
 import prjdata.QuizProductDTO;
 import prjdata.QuizUserDTO;
 
@@ -266,7 +267,135 @@ public class MainProc extends HttpServlet {
 			}
 			return list;			
 		}
+		
+	// shop detail 상품가져오기
+	public QuizProductDTO getProduct(int product_Number){
 	
+		String sql = null;
+		QuizProductDTO dto = new QuizProductDTO();
+		
+		try{
+			con = ds.getConnection();
+			
+			sql = "select * from product where product_Number=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, product_Number);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				dto.setProduct_Number(rs.getInt("product_Number"));
+				dto.setProduct_Name(rs.getString("product_Name"));
+				dto.setProduct_Price(rs.getInt("product_Price"));
+				dto.setProduct_Image(rs.getString("product_Image"));
+				dto.setProduct_Stock(rs.getInt("product_Stock"));
+				dto.setProduct_Company(rs.getString("product_Company"));
+				dto.setProduct_Contents(rs.getString("product_Contents"));
+			}
+		}
+		catch(Exception err){
+			System.out.println("getProdduct() : " + err);
+		}
+		finally{
+			freeConnection();
+		}
+		
+		return dto;
+		
+	}
+	
+	// 장바구니 중복확인(아이디,상품번호), shop_cart
+	public boolean compareCart(String id, int pnum){
+		
+		String sql = null;
+		boolean bool = true;
+		
+		try{
+			con = ds.getConnection();
+			
+			sql = "select * from cart where cart_user_id=? and cart_product_number=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, pnum);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				System.out.println("true 출력");
+				bool = true;
+			}
+			else{
+				System.out.println("false 출력");
+				bool = false;
+				
+			}
+		}
+		catch(Exception err){
+			System.out.println("compareCart() : " + err);
+		}
+		finally{
+			freeConnection();
+		}
+		return bool;
+		
+	}
+	
+	// 장바구니 추가(아이디, 상품번호) shop_cart
+	public void insertCart(String id, int pnum){
+		String sql = null;
+		boolean bool = false;
+		
+		try{
+			con = ds.getConnection();
+			
+			sql = "insert into cart (cart_user_id,cart_product_number) values(?,?);";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, pnum);
+			pstmt.executeUpdate();
+			
+		}
+		catch(Exception err){
+			System.out.println("compareCart() : " + err);
+		}
+		finally{
+			freeConnection();
+		}
+	}
+	
+	// 카트정보 불러오기(아이디), shop_cart
+	public ArrayList getCart(String id){
+		
+		ArrayList list = new ArrayList();
+		String sql = null;
+		
+		
+		try{
+			con = ds.getConnection();
+			
+			sql = "select product_image,product_name,product_price from product where product_number in (select cart_product_number from cart where cart_user_id=?);";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				QuizProductDTO dto = new QuizProductDTO();
+				
+				dto.setProduct_Image(rs.getString("product_image"));
+				dto.setProduct_Name(rs.getString("product_name"));
+				dto.setProduct_Price(rs.getInt("product_price"));
+				
+				list.add(dto);
+			}
+		}
+		catch(Exception err){
+			System.out.println("getCart() : " + err);
+		}
+		finally{
+			freeConnection();
+		}
+		
+		return list;
+		
+	}
 	// 인스턴스 클로즈 메서드
 	public void freeConnection(){
 		if(rs != null){try{rs.close();}catch(Exception err){}}

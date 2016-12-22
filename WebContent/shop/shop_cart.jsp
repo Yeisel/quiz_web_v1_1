@@ -1,101 +1,129 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@page import="java.util.List"%>
+<%@page import="prjdata.QuizProductDTO"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+<script>
+	function fnDelete(){
+		
+		alert("ì‚­ì œí•˜ê¸°")
+	}
+</script>
 </head>
+<jsp:useBean id="dao" class="prjbean.MainProc"/>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String id = (String)session.getAttribute("logged");
+	int pnum = Integer.parseInt(request.getParameter("product_Number"));
+	Boolean bool = dao.compareCart(id, pnum);
+	if(bool == false){dao.insertCart(id, pnum);}
+	List list = dao.getCart(id);
+%>
 	<body>
 		<div class="sTitwrap">
-			<h3 class="cp_intit">ÁÖ¹®»óÇ° È®ÀÎ</h3>
+			<h3 class="cp_intit">ìž¥ë°”êµ¬ë‹ˆ</h3>
+			<input type="text" name="userId" value="<%=id %>"/>
+			<input type="text" name="pnum" value="<%=pnum %>"/>
 		</div>
 		<div style="display:flex; background-color:rgba(230, 235, 237, 0.25);border: solid 1px rgba(210, 215, 217, 0.75)">
-			
-					<div style="flex:1.5; ">»óÇ°ÀÌ¹ÌÁö</div>
-					<div style="flex:3">»óÇ°¸í</div>
-					<div style="flex:1">¼ö·®</div>
-					<div style="flex:1">»óÇ°±Ý¾×</div>
-					<div style="flex:1">ÇÒÀÎ±Ý¾×</div>
-					<div style="flex:1.5">ÇÒÀÎÀû¿ë±Ý¾×</div>
-					<div style="flex:1;">¹è¼Ûºñ</div>
+					<div style="flex:1;">êµ¬ë¶„</div>
+					<div style="flex:1;">ìƒí’ˆì´ë¯¸ì§€</div>
+					<div style="flex:3">ìƒí’ˆëª… : </div>
+					<div style="flex:1">ìˆ˜ëŸ‰ : </div>
+					<div style="flex:1">ìƒí’ˆê¸ˆì•¡ : </div>
+					<div style="flex:1">í• ì¸ê¸ˆì•¡ : </div>
+					<div style="flex:1.5">í• ì¸ì ìš©ê¸ˆì•¡ : </div>
+					<div style="flex:1;">ë°°ì†¡ë¹„ : </div>
 				
 		</div>
+<%
+		for(int i=0; i<list.size(); i++){
+			QuizProductDTO dto = (QuizProductDTO)list.get(i);
+
+%>
 		<div style="display:flex; border: solid 1px rgba(210, 215, 217, 0.75)">
-				
-					<div style="flex:1.5"><img src=""><%="»óÇ°ÀÌ¹ÌÁö"%></img></div>
-					<div style="flex:3"><%="»óÇ°¸í"%></div>
-					<div style="flex:1"><%="¼ö·®"%></div>
-					<div style="flex:1"><%="»óÇ°±Ý¾×"%></div>
-					<div style="flex:1"><%="ÇÒÀÎ±Ý¾×"%></div>
-					<div style="flex:1.5"><%="ÇÒÀÎÀû¿ë±Ý¾×"%></div>
-					<div style="flex:1"><%="¹è¼Ûºñ"%></div>
+					<div align="center" style="flex:1; "><input type="checkbox" id="check<%=i%>" name="check<%=i%>"><label for="check<%=i%>"></label></input>
+						<input type="hidden" name="pnum<%=i%>"/></div>
+					<div style="flex:1; "><img src=<%=dto.getProduct_Image()%> style="width:90px;height:50px;"></img></div>
+					<div style="flex:3"><%=dto.getProduct_Name()%></div>
+					<div style="flex:1">ìˆ˜ëŸ‰</div>
+					<div style="flex:1"><%=dto.getProduct_Price()%> P</div>
+					<div style="flex:1"></div>
+					<div style="flex:1.5"></div>
+					<div style="flex:1"></div>
 			
 		</div>
+<%
+		}
+%>
 		<div style="margin-top:20px; display:flex;">
-			<div style="flex:1"><input type="button" value="»èÁ¦ÇÏ±â" ></input></div>
+			<div style="flex:1"><a href="javascript:fnDelete()"><input type="button" value="ì‚­ì œí•˜ê¸°" /></a></div>
 			<div style="flex:5"></div>
-			<div style="flex:1"><input type="button" value="¼±ÅÃÁÖ¹®" ></input></div>
-			<div style="flex:1"><input type="button" value="ÀüÃ¼ÁÖ¹®" ></input></div>
+			<div style="flex:1"><input type="button" value="ì„ íƒì£¼ë¬¸" ></input></div>
+			<div style="flex:1"><input type="button" value="ì „ì²´ì£¼ë¬¸" ></input></div>
 		</div>
 		<br/>
-		<h3 class="sTitwrap">±¸¸Å ¿¹Á¤ ³»¿ª</h3>
+		<h3 class="sTitwrap">êµ¬ë§¤ ì˜ˆì • ë‚´ì—­</h3>
 		<div>
 			<div style="display:flex; border:1px solid #eaeaea; background-color:rgba(230, 235, 237, 0.25);">	
-					<div style="flex:1">ÁÖ¹®±Ý¾× : <%="ÁÖ¹®±Ý¾×"%></div>
-					<div style="flex:1">ÇÒÀÎ»ç¿ë±Ý¾× : <%="ÇÒÀÎ»ç¿ë±Ý¾×"%></div>
-					<div style="flex:1">ÃÖÁ¾°áÁ¦±Ý¾× : <%="ÃÖÁ¾°áÁ¦±Ý¾×"%></div>
+					<div style="flex:1">ì£¼ë¬¸ê¸ˆì•¡ : <%="ì£¼ë¬¸ê¸ˆì•¡"%></div>
+					<div style="flex:1">í• ì¸ì‚¬ìš©ê¸ˆì•¡ : <%="í• ì¸ì‚¬ìš©ê¸ˆì•¡"%></div>
+					<div style="flex:1">ìµœì¢…ê²°ì œê¸ˆì•¡ : <%="ìµœì¢…ê²°ì œê¸ˆì•¡"%></div>
 			</div>
 		</div>
 		
 		<div style="border:1px solid #eaeaea ;">
 			<div style="display:flex">	
-				<div style="flex:1">º¸À¯Æ÷ÀÎÆ® : </div><div style="flex:5"><%="º¸À¯Æ÷ÀÎÆ®"%></div>
+				<div style="flex:1">ë³´ìœ í¬ì¸íŠ¸ : </div><div style="flex:5"><%="ë³´ìœ í¬ì¸íŠ¸"%></div>
 			</div>
 			<div style="display:flex">	
-				<div style="flex:1">»ç¿ë¿¹Á¤Æ÷ÀÎÆ® : </div><div style="flex:5"><%="ÃÖÁ¾°áÁ¦±Ý¾×"%></div>
+				<div style="flex:1">ì‚¬ìš©ì˜ˆì •í¬ì¸íŠ¸ : </div><div style="flex:5"><%="ì‚¬ìš©ì˜ˆì •í¬ì¸íŠ¸"%></div>
 			</div>
 		</div>
 		<br/><br/>
-		<h3 class="sTitwrap">¹è¼ÛÁö Á¤º¸ ÀÔ·Â</h3>
+		<h3 class="sTitwrap">ë°°ì†¡ì§€ ì •ë³´ ìž…ë ¥</h3>
 		<table class="alt">
 			<tbody>
 				<tr>
-					<td style="width:200px;">¹è¼ÛÁö¼±ÅÃ </td>
-					<td><input type="radio" id="r1" name="r1"/><label for="r1">°¡ÀÔÀÚÁ¤º¸¿Í µ¿ÀÏ</label><input type="radio" id="r2" name="r1"/><label for="r2">»õ·Î ÀÔ·Â</label></td>
+					<td style="width:200px;">ë°°ì†¡ì§€ì„ íƒ </td>
+					<td><input type="radio" id="r1" name="r1"/><label for="r1">ê°€ìž…ìžì •ë³´ì™€ ë™ì¼</label><input type="radio" id="r2" name="r1"/><label for="r2">ìƒˆë¡œ ìž…ë ¥</label></td>
 				
 				</tr>
 				<tr>
-					<td>¹ÞÀ¸½Ã´ÂºÐ : </td>
-					<td><input type="text" placeholder="¹ÞÀ¸½Ã´ÂºÐ" required="required"/></td>
+					<td>ë°›ìœ¼ì‹œëŠ”ë¶„ : </td>
+					<td><input type="text" placeholder="ë°›ìœ¼ì‹œëŠ”ë¶„" required="required"/></td>
 				</tr>
 				<tr>
-					<td>ÁÖ ¼Ò : </td>
-					<td><input type="text" placeholder="ÁÖ¼Ò" required="required"/></td>
+					<td>ì£¼ ì†Œ : </td>
+					<td><input type="text" placeholder="ì£¼ì†Œ" required="required"/></td>
 				</tr>
 				<tr>
-					<td>ÈÞ´ëÀüÈ­ : </td>
-					<td><input type="text" placeholder="ÈÞ´ëÀüÈ­" required="required"/></td>
+					<td>íœ´ëŒ€ì „í™” : </td>
+					<td><input type="text" placeholder="íœ´ëŒ€ì „í™”" required="required"/></td>
 				</tr>
 				<tr>
-					<td>ÀÚÅÃÀüÈ­ : </td>
-					<td><input type="text" placeholder="ÀÚÅÃÀüÈ­" required="required"/></td>
+					<td>ìžíƒì „í™” : </td>
+					<td><input type="text" placeholder="ìžíƒì „í™”" required="required"/></td>
 				</tr>
 				<tr>
-					<td>ÁÖ¹®ÀÚ¸í :</td>
+					<td>ì£¼ë¬¸ìžëª… :</td>
 					<td><input type="text" required="required"/></td>
 				</tr>
 				<tr>
-					<td>¹è¼Û¿ä±¸»çÇ× :</td>
+					<td>ë°°ì†¡ìš”êµ¬ì‚¬í•­ :</td>
 					<td><input type="text" required="required"/></td>
 				</tr>
 			</tbody>
 		</table>	
 		<div style="margin-top:20px; display:flex">
-			<div style="flex:1"><a href="index.jsp"><input type="button" value="Ã³À½À¸·Î" /></a></div>
-			<div style="flex:1"><a href="javascript:fnPageMove('shop/shop_detail.jsp')"><input type="button" value="»óÇ°¸ñ·Ï" /></a></div>
+			<div style="flex:1"><a href="index.jsp"><input type="button" value="ì²˜ìŒìœ¼ë¡œ" /></a></div>
+			<div style="flex:1"><a href="javascript:fnPageMove('shop/shop_detail.jsp')"><input type="button" value="ìƒí’ˆëª©ë¡" /></a></div>
 			<div style="flex:4"></div>
-			<div style="flex:1"><input type="button" value="°áÁ¦ÇÏ±â" style="float:right"/></div>
-			<div style="flex:1"><input type="button" value="Ãë¼ÒÇÏ±â" style="float:right"/></div>
+			<div style="flex:1"><input type="button" value="ê²°ì œí•˜ê¸°" style="float:right"/></div>
+			<div style="flex:1"><input type="button" value="ì·¨ì†Œí•˜ê¸°" style="float:right"/></div>
 		</div>
 
 			

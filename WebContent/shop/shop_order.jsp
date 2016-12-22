@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +9,7 @@
 		<div style="display:flex; border:1px solid #eaeaea">
 			<div style="flex:1;">
 				<div><br/>
-					<h3 align="center">а╤х╦╠Б╟ё</h3>
+					<h3 align="center">Л║╟М ▄Й╦╟Й╟└</h3>
 				</div>
 			</div>
 			<div style="flex:8">
@@ -27,7 +27,7 @@
 						<option value='2007' >2007</option>
 						<option value='2006' >2006</option>
 					</select>
-					<label for="startYY">ЁБ</label>
+					<label for="startYY">К┘└</label>
 					<select name="startMM" id="startMM" style="width:60px; height:25px">
 						<option value='01' >1</option>
 						<option value='02' >2</option>
@@ -43,7 +43,7 @@
 						<option value='12' >12</option>
 				
 				    </select>
-				    <label for="startMM">©Ы</label>
+				    <label for="startMM">Л⌡■</label>
 					<select name="startDD" id="startDD" style="width:60px; height:25px">
 						<option value='01' >1</option>
 						<option value='02' >2</option>
@@ -77,7 +77,7 @@
 						<option value='30' >30</option>
 						<option value='31' >31</option>
 					</select>
-					<label for="startDD">юо</label>&nbsp;~&nbsp;
+					<label for="startDD">Л²╪</label>&nbsp;~&nbsp;
 					<select name="endYY" id="endYY"  style="width:75px; height:25px">
 						<option value='2016'  selected>2016</option>
 						<option value='2015' >2015</option>
@@ -92,7 +92,7 @@
 						<option value='2006' >2006</option>
 				
 					 </select>
-					<label for="endYY">ЁБ</label>
+					<label for="endYY">К┘└</label>
 					<select name="endMM" id="endMM" style="width:60px; height:25px">
 						<option value='01' >1</option>
 						<option value='02' >2</option>
@@ -107,7 +107,7 @@
 						<option value='11' >11</option>
 						<option value='12'  selected>12</option>
 					</select>
-					<label for="endMM">©Ы</label>
+					<label for="endMM">Л⌡■</label>
 					<select name="endDD" id="endDD" style="width:60px; height:25px" >
 						<option value='01' >1</option>
 						<option value='02' >2</option>
@@ -141,37 +141,37 @@
 						<option value='30' >30</option>
 						<option value='31' >31</option>
 					</select>
-					<label for="endDD">юо&nbsp;</label>
+					<label for="endDD">Л²╪&nbsp;</label>
 				</div>
 				<div class="QnAtxt" style="display:flex">
-					<div style="flex:1" align="center"><h3>аж╧╝╩Сг╟╦М</h3></div>
-					<div style="flex:1; margin-right:10px;"><input type="text" id="searchBarPrdNm" name="searchBarPrdNm" placeholder="╩Сг╟╦Мют╥б"></div>
-					<div style="flex:6"><input type="button" class="bt_srh" onClick="setReadList(1);" value="а╤х╦го╠Б"></div>
+					<div style="flex:1" align="center"><h3>Лё╪К╛╦Л┐│М▓┬К╙┘</h3></div>
+					<div style="flex:1; margin-right:10px;"><input type="text" id="searchBarPrdNm" name="searchBarPrdNm" placeholder="Л┐│М▓┬К╙┘Л·┘К═╔"></div>
+					<div style="flex:6"><input type="button" class="bt_srh" onClick="setReadList(1);" value="Л║╟М ▄М∙≤Й╦╟"></div>
 				</div>
 			</div>
 		</div>
 		
 		<div class="sTitwrap">
-			<h3 class="cp_intit">аж╧╝Ё╩©╙ а╤х╦</h3>
+			<h3 class="cp_intit">Лё╪К╛╦К┌╢Л≈╜ Л║╟М ▄</h3>
 		</div>
 		
 		<div style="display:flex; background-color:rgba(230, 235, 237, 0.25);border: solid 1px rgba(210, 215, 217, 0.75)">
-			<div style="flex:1.5; ">аж╧╝юоюз</div>
-			<div style="flex:3">аж╧╝╩Сг╟а╓╨╦</div>
-			<div style="flex:1">╩Сг╟╠щ╬в(╪Ж╥╝)</div>
-			<div style="flex:1">╧Х╪ш╨Я</div>
-			<div style="flex:1">аж╧╝╩Себ</div>
+			<div style="flex:1.5; ">Лё╪К╛╦Л²╪Л·░</div>
+			<div style="flex:3">Лё╪К╛╦Л┐│М▓┬Л═∙КЁ╢</div>
+			<div style="flex:1">Л┐│М▓┬Й╦┬Л∙║(Л┬≤К÷┴)</div>
+			<div style="flex:1">К╟╟Л├║К╧└</div>
+			<div style="flex:1">Лё╪К╛╦Л┐│М┐°</div>
 		</div>
 		<div style="display:flex; border: solid 1px rgba(210, 215, 217, 0.75)">
-			<div style="flex:1.5; "><%="аж╧╝юоюз"%></div>
-			<div style="flex:3"><%="аж╧╝╩Сг╟а╓╨╦"%></div>
-			<div style="flex:1"><%="╩Сг╟╠щ╬в(╪Ж╥╝)"%></div>
-			<div style="flex:1"><%="╧Х╪ш╨Я"%></div>
-			<div style="flex:1"><%="аж╧╝╩Себ"%></div>
+			<div style="flex:1.5; "><%="Лё╪К╛╦Л²╪Л·░"%></div>
+			<div style="flex:3"><%="Лё╪К╛╦Л┐│М▓┬Л═∙КЁ╢"%></div>
+			<div style="flex:1"><%="Л┐│М▓┬Й╦┬Л∙║(Л┬≤К÷┴)"%></div>
+			<div style="flex:1"><%="К╟╟Л├║К╧└"%></div>
+			<div style="flex:1"><%="Лё╪К╛╦Л┐│М┐°"%></div>
 		</div>
 		<div style="margin-top:20px; display:flex">
-			<div style="flex:1"><a href="index.jsp"><input type="button" value="цЁю╫ю╦╥н" /></a></div>
-			<div style="flex:1; float:right"><a href="javascript:fnPageMove('shop/shop_detail.jsp')"><input type="button" value="╩Сг╟╦Я╥о" /></a></div>
+			<div style="flex:1"><a href="index.jsp"><input type="button" value="Л╡≤Л²▄Л°╪К║°" /></a></div>
+			<div style="flex:1; float:right"><a href="javascript:fnPageMove('shop/shop_detail.jsp')"><input type="button" value="Л┐│М▓┬К╙╘К║²" /></a></div>
 			
 		</div>
 	</body>
