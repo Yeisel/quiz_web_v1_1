@@ -371,7 +371,7 @@ public class MainProc extends HttpServlet {
 		try{
 			con = ds.getConnection();
 			
-			sql = "select product_image,product_name,product_price from product where product_number in (select cart_product_number from cart where cart_user_id=?);";
+			sql = "select product_image,product_name,product_price,product_number from product where product_number in (select cart_product_number from cart where cart_user_id=?);";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
@@ -382,6 +382,7 @@ public class MainProc extends HttpServlet {
 				dto.setProduct_Image(rs.getString("product_image"));
 				dto.setProduct_Name(rs.getString("product_name"));
 				dto.setProduct_Price(rs.getInt("product_price"));
+				dto.setProduct_Number(rs.getInt("product_number"));
 				
 				list.add(dto);
 			}
@@ -395,6 +396,11 @@ public class MainProc extends HttpServlet {
 		
 		return list;
 		
+	}
+	
+	// 카트삭제 프로세스
+	public void deleteCart(){
+		System.out.println("카트삭제");
 	}
 	// 인스턴스 클로즈 메서드
 	public void freeConnection(){

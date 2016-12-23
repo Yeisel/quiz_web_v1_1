@@ -54,7 +54,7 @@ strong, b{
 								<header id="header">
 									<a href="index.jsp" class="logo"><strong style="font-size:60px;">QuizBook</strong></a>
 								</header>
-
+	
 							<!-- Banner -->
 								<section >
 									<div class="here" id="here">

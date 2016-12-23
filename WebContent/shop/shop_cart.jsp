@@ -7,16 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 <script>
-	function fnDelete(){
-		
-		alert("삭제하기")
-	}
+
 </script>
 </head>
 <jsp:useBean id="dao" class="prjbean.MainProc"/>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String id = (String)session.getAttribute("logged");
+	System.out.println("userId = " + id);
 	int pnum = Integer.parseInt(request.getParameter("product_Number"));
 	Boolean bool = dao.compareCart(id, pnum);
 	if(bool == false){dao.insertCart(id, pnum);}
@@ -28,43 +26,44 @@
 			<input type="text" name="userId" value="<%=id %>"/>
 			<input type="text" name="pnum" value="<%=pnum %>"/>
 		</div>
+		
 		<div style="display:flex; background-color:rgba(230, 235, 237, 0.25);border: solid 1px rgba(210, 215, 217, 0.75)">
 					<div style="flex:1;">구분</div>
 					<div style="flex:1;">상품이미지</div>
-					<div style="flex:3">상품명 : </div>
-					<div style="flex:1">수량 : </div>
-					<div style="flex:1">상품금액 : </div>
-					<div style="flex:1">할인금액 : </div>
-					<div style="flex:1.5">할인적용금액 : </div>
-					<div style="flex:1;">배송비 : </div>
+					<div style="flex:3">상품명</div>
+					<div style="flex:1">수량</div>
+					<div style="flex:1">상품금액</div>
+					<div style="flex:1">할인금액</div>
+					<div style="flex:1.5">할인적용금액</div>
+					<div style="flex:1;">배송비</div>
 				
 		</div>
+		<form method="post" action="javascript:parent.fnPageMove('shop/shop_cart_proc.jsp')">
+		
 <%
 		for(int i=0; i<list.size(); i++){
 			QuizProductDTO dto = (QuizProductDTO)list.get(i);
 
 %>
 		<div style="display:flex; border: solid 1px rgba(210, 215, 217, 0.75)">
-					<div align="center" style="flex:1; "><input type="checkbox" id="check<%=i%>" name="check<%=i%>"><label for="check<%=i%>"></label></input>
-						<input type="hidden" name="pnum<%=i%>"/></div>
-					<div style="flex:1; "><img src=<%=dto.getProduct_Image()%> style="width:90px;height:50px;"></img></div>
-					<div style="flex:3"><%=dto.getProduct_Name()%></div>
-					<div style="flex:1">수량</div>
+					<input type="hidden" name="userId" value="<%=id%>"/>
+					<div align="center" style="flex:1; "><input type="checkbox" name="product_number" id="check<%=i%>" value="<%=dto.getProduct_Number()%>"><label for="check<%=i%>"></label></input></div>
+					<div style="flex:1; "><input type="hidden" name="product_image" value=<%=dto.getProduct_Image()%>/><img src=<%=dto.getProduct_Image()%> style="width:90px;height:50px;"></img></div>
+					<div style="flex:3"><input type="hidden" name="product_name" value="<%=dto.getProduct_Name()%>"/><%=dto.getProduct_Name()%></div>
+					<div style="flex:1" id="count1" name="count" value="count">수량</div>
 					<div style="flex:1"><%=dto.getProduct_Price()%> P</div>
 					<div style="flex:1"></div>
 					<div style="flex:1.5"></div>
 					<div style="flex:1"></div>
-			
 		</div>
 <%
 		}
 %>
-		<div style="margin-top:20px; display:flex;">
-			<div style="flex:1"><a href="javascript:fnDelete()"><input type="button" value="삭제하기" /></a></div>
-			<div style="flex:5"></div>
-			<div style="flex:1"><input type="button" value="선택주문" ></input></div>
-			<div style="flex:1"><input type="button" value="전체주문" ></input></div>
-		</div>
+			<input type="submit" name="delete" value="삭제하기"/>
+			<input type="submit" name="choiceBuy" value="선택주문"/>
+			<input type="submit" name="allBuy" value="전체주문"/>
+		</form>
+		
 		<br/>
 		<h3 class="sTitwrap">구매 예정 내역</h3>
 		<div>
@@ -120,10 +119,10 @@
 		</table>	
 		<div style="margin-top:20px; display:flex">
 			<div style="flex:1"><a href="index.jsp"><input type="button" value="처음으로" /></a></div>
-			<div style="flex:1"><a href="javascript:fnPageMove('shop/shop_detail.jsp')"><input type="button" value="상품목록" /></a></div>
+			<div style="flex:1"><a href="javascript:fnPageMove('shop/shop_detail.jsp')"><input type="button" value="상품목록"></a></div>
 			<div style="flex:4"></div>
-			<div style="flex:1"><input type="button" value="결제하기" style="float:right"/></div>
-			<div style="flex:1"><input type="button" value="취소하기" style="float:right"/></div>
+			<div style="flex:1"><input type="button" value="결제하기" style="float:right"></a></div>
+			<div style="flex:1"><input type="button" value="취소하기" style="float:right"></a></div>
 		</div>
 
 			
