@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+<title>마이 페이지</title>
 <script>
 	function fnPopup(url, window_name){
 		window.open(url, window_name, "width=800, height=600, left=500, top=200");
@@ -67,7 +67,7 @@
 			<div style="flex:1"><strong style="font-size:18px; color:darkblue;">사용한 포인트</strong></div>
 			<div style="flex:1"></div>
 			<div style="flex:4"><label style="color:midnightblue;"><%=dto.getUser_Total_Point() - dto.getUser_Current_Point()%></label></div>
-			<div style="flex:4"><button type="submit"><strong style="font-size:13px; color:red;">퀴즈 히스 토리</strong></button></div>
+			<div style="flex:4"><button type="submit" onclick="fnPopup('mypage/quiz_history.jsp', '퀴즈 히스토리')"><strong style="font-size:13px; color:red;">퀴즈 &nbsp;히스토리</strong></button></div>
 		</div><br/>
 	</form>
 	<form method="post" action="javascript:parent.fnPageMove('mypage/my_main_proc.jsp')">
@@ -76,7 +76,7 @@
 			<div style="flex:1"><strong style="font-size:18px; color:darkblue;">보유 포인트</strong></div>
 			<div style="flex:1"></div>
 			<div style="flex:4"><label style="color:midnightblue;"><%=dto.getUser_Current_Point()%></label></div>
-			<div style="flex:4"><button type="submit"><strong style="font-size:13px; color:red;">구매 내역 조회</strong></button></div>
+			<div style="flex:4"><button type="submit" onclick="fnPopup('mypage/buy_history.jsp', '구매 내역 조회')"><strong style="font-size:13px; color:red;">구매 내역 조회</strong></button></div>
 		</div><br/>
 	</form>
 </body>

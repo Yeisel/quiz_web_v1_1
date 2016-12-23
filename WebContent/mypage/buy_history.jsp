@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+<title>구매 히스토리</title>
+<link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
 <h3>구매히스토리</h3>
+
 </body>
 </html>

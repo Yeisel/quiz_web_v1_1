@@ -110,26 +110,37 @@ strong, b{
 			
 			if(session.getAttribute("logged") == null){
 %>	
-									<form method="post" action="login.do">
-										<input type="text" name="user_Id" id="user_Id" placeholder="Id" />
-										<input type="password" name="user_Pw" id="user_Pw" placeholder="Password" /><br/>
-										<button type="submit"><strong style="font-size:13px; color:red;">로그인</strong></button>
-									</form>
-									<a href="javascript:fnPageMove('mypage/join_new.jsp')" class="button"><strong style="font-size:13px; color:gray;">회원가입</strong></a>
+				<form method="post" action="login.do">
+					<input type="text" name="user_Id" id="user_Id" placeholder="Id" />
+					<input type="password" name="user_Pw" id="user_Pw" placeholder="Password" /><br/>
+					<button type="submit"><strong style="font-size:13px; color:red;">로그인</strong></button>
+				</form>
+				<a href="javascript:fnPageMove('mypage/join_new.jsp')" class="button"><strong style="font-size:13px; color:gray;">회원가입</strong></a>
 <%			
+			}
+			else if(session.getAttribute("admin").equals(session.getAttribute("logged"))){
+%>
+				<form method="post" action="login.do">
+					<input type="hidden" name="logout" value="guest"/>
+					빡씨게 일해라! 관리자 &nbsp;<strong style="font-size:25px;font-weight:1000px"><%=session.getAttribute("admin")%></strong> 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+					<button type="submit"><strong style="font-size:13px; color:red;">로그아웃</strong></button>
+					<a href="javascript:fnPageMove('mypage/admin_main.jsp')" class="button"><strong style="font-size:13px; color:red;">관리자페이지</strong></a><br/>
+					<br/>
+				</form>
+<%
 			}
 			else{
 %>					
-					<form method="post" action="login.do">
-						<input type="hidden" name="logout" value="guest"/>
-						<strong style="font-size:25px;font-weight:1000px"><%=session.getAttribute("logged")%></strong> 님 어서오세요!!
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
-						<button type="submit"><strong style="font-size:13px; color:red;">로그아웃</strong></button>
-						<a href="javascript:fnPageMove('mypage/my_main.jsp')" class="button"><strong style="font-size:13px; color:red;">마이페이지</strong></a><br/>
-						<br/>
-						보유포인트 : <%=dto.getUser_Current_Point()%>
-						
-					</form>
+				<form method="post" action="login.do">
+					<input type="hidden" name="logout" value="guest"/>
+					<strong style="font-size:25px;font-weight:1000px"><%=session.getAttribute("logged")%></strong> 님 어서오세요!!
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+					<button type="submit"><strong style="font-size:13px; color:red;">로그아웃</strong></button>
+					<a href="javascript:fnPageMove('mypage/my_main.jsp')" class="button"><strong style="font-size:13px; color:red;">마이페이지</strong></a><br/>
+					<br/>
+					보유포인트 : <%=dto.getUser_Current_Point()%>
+				</form>
 <%
 			}
 %>									

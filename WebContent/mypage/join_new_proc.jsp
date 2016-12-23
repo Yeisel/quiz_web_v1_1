@@ -15,12 +15,22 @@
 <jsp:setProperty property="*" name="dto"/>
 
 <%
-	if(request.getParameter("policy") != null){
+	if(request.getParameter("policy") != null){	
 		if(dto.getUser_Password().equals(request.getParameter("pass_confirm"))){
-			dao.inputNewUser(dto);
+			if(request.getParameter("user_Id").length() > 4){
+				dao.inputNewUser(dto);
+			}
+			else{
+%>
+				<script>
+					alert("아이디는 6자 이상이어야 합니다.");
+					location.href="javascript:parent.fnPageMove('mypage/join_new.jsp')";
+				</script>
+<%
+			}
 %>
 <script>
-	alert("축하합니다~ QUIZ BOOK의 회원이 되셨네요.");
+	alert("QUIZ BOOK의 회원으로 승급 된 것을 축하 드립니다~!!");
 	location.href="../index.jsp";
 </script>
 <%

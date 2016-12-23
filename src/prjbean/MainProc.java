@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import prjdata.QuizAdminDTO;
 import prjdata.QuizProductDTO;
 import prjdata.QuizUserDTO;
 
@@ -35,31 +36,78 @@ public class MainProc extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String userId = (String)req.getParameter("user_Id");
-		String userPw = (String)req.getParameter("user_Pw");
-		String guest = "guest";
+		String userId = (String)req.getParameter("user_Id");            // index.jsp의 text name="user_Id"
+		String prepareId = null;										// 관리자인지 구별을 위한 변수
+		String userPw = (String)req.getParameter("user_Pw");            // index.jsp의 text name="user_Pw"
+		String guest = "guest";											// logout 구별을 위한 변수
+		String sql = null;												// sql query용 변수
+		
+		System.out.println("doPost userId : " + userId);
+		
+		if(userId != null){
+			System.out.println("여기는 if(userId != null)");
+			if(userId.length() > 4){
+				System.out.println("if(userId.length() > 4)");
+				prepareId = userId.substring(0, 5);
+			}
+			else{
+				prepareId = "minda";
+			}
+		}
+		else{
+			prepareId = "minda";
+		}
 		
 		session = req.getSession();
-		
-		QuizUserDTO dto = new QuizUserDTO();
-		
-		String sql = "select * from user where user_Id='" + userId + "'";
 		
 		try{
 			con = ds.getConnection();
 		
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
+			System.out.println("prepareId : " + prepareId);
 			
-			if(rs.next()){
-				System.out.println("여기는 rs 넥스트");
-				
-				dto.setUser_Id(rs.getString("user_Id"));
-				dto.setUser_Password(rs.getString("user_Password"));
-				dto.setUser_Current_Point(rs.getInt("user_Current_Point"));
-		
-				req.setAttribute("dto", dto);
+			if(prepareId.equals("minda")){
+				System.out.println("여기는 prepareId minda");
 			}
+			else if(prepareId.equals("admin")){
+				sql = "select * from admin where admin_Id='" + userId + "'";
+				
+				QuizAdminDTO dto = new QuizAdminDTO();
+				
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()){
+					System.out.println("여기는 admin rs 넥스트");
+					
+					dto.setAdmin_Id(rs.getString("admin_Id"));
+					dto.setAdmin_Password(rs.getString("admin_Password"));
+			
+					req.setAttribute("dto", dto);
+					
+					session.setAttribute("admin", userId);
+				}
+			}
+			else{
+				sql = "select * from user where user_Id='" + userId + "'";
+				
+				QuizUserDTO dto = new QuizUserDTO();
+				
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()){
+					System.out.println("여기는 user rs 넥스트");
+					
+					dto.setUser_Id(rs.getString("user_Id"));
+					dto.setUser_Password(rs.getString("user_Password"));
+					dto.setUser_Current_Point(rs.getInt("user_Current_Point"));
+			
+					req.setAttribute("dto", dto);
+					
+					session.setAttribute("admin", "User");
+				}
+			}
+			
 		
 		dispatcher = req.getRequestDispatcher("index.jsp");
 		
@@ -74,21 +122,40 @@ public class MainProc extends HttpServlet {
 				System.out.println("여기는 id pw 낫널 : " + req.getParameter("user_Id") + ", " + req.getParameter("user_Pw"));				
 				System.out.println("userId , userPw : " + userId + ", " + userPw);				
 				
-				if(rs.getString("user_Id").equals(userId) && rs.getString("user_Password").equals(userPw)){
-					System.out.println("여기는 로긴 성공");
-					session.setAttribute("logged", userId);
-					dispatcher.forward(req, resp);
-				}
-				
-				else if(guest.equals(req.getParameter("logout"))){
-					System.out.println("여기는 로그아웃");
-					session.invalidate();
-					dispatcher.forward(req, resp);
+				if(session.getAttribute("admin").equals(userId)){
+					if(rs.getString("admin_Id").equals(userId) && rs.getString("admin_Password").equals(userPw)){
+						System.out.println("여기는 admin 로긴 성공");
+						session.setAttribute("admin", userId);
+						session.setAttribute("logged", userId);
+						dispatcher.forward(req, resp);
+					}
+					else if(guest.equals(req.getParameter("logout"))){
+						System.out.println("여기는 admin 로그아웃");
+						session.invalidate();
+						dispatcher.forward(req, resp);
+					}
+					else{
+						System.out.println("여기는 admin 비회원");
+						session.invalidate();
+						dispatcher.forward(req, resp);
+					}
 				}
 				else{
-					System.out.println("여기는 비회원");
-					session.invalidate();
-					dispatcher.forward(req, resp);
+					if(rs.getString("user_Id").equals(userId) && rs.getString("user_Password").equals(userPw)){
+						System.out.println("여기는 user 로긴 성공");
+						session.setAttribute("logged", userId);
+						dispatcher.forward(req, resp);
+					}				
+					else if(guest.equals(req.getParameter("logout"))){
+						System.out.println("여기는 user 로그아웃");
+						session.invalidate();
+						dispatcher.forward(req, resp);
+					}
+					else{
+						System.out.println("여기는 user 비회원");
+						session.invalidate();
+						dispatcher.forward(req, resp);
+					}
 				}
 			}
 			else{
