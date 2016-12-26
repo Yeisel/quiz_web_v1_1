@@ -15,25 +15,29 @@
 <jsp:setProperty property="*" name="dto"/>
 
 <%
-	if(request.getParameter("policy") != null){	
+	System.out.println("request.getParameter(policy) : " + request.getParameter("policy"));
+	System.out.println("request.getParameter(user_Id) : " + request.getParameter("user_Id"));
+	System.out.println("dto.getUser_Id() : " + dto.getUser_Id());	
+
+	if(request.getParameter("user_Id").length() > 4){
 		if(dto.getUser_Password().equals(request.getParameter("pass_confirm"))){
-			if(request.getParameter("user_Id").length() > 4){
+			if(request.getParameter("policy") != null){
 				dao.inputNewUser(dto);
+%>
+<script>
+	alert("QUIZ BOOK의 회원으로 승급 된 것을 축하 드립니다~!!");
+	location.href="index.jsp";
+</script>
+<%
 			}
 			else{
 %>
 				<script>
-					alert("아이디는 6자 이상이어야 합니다.");
+					alert("약관에 동의 하여야 회원 가입이 가능합니다.");					
 					location.href="javascript:parent.fnPageMove('mypage/join_new.jsp')";
 				</script>
 <%
 			}
-%>
-<script>
-	alert("QUIZ BOOK의 회원으로 승급 된 것을 축하 드립니다~!!");
-	location.href="../index.jsp";
-</script>
-<%
 		}
 		else{
 %>
@@ -46,8 +50,8 @@
 	}
 	else{
 %>
-		<script>
-			alert("약관에 동의 하여야 회원 가입이 가능합니다.");
+		<script>			
+			alert("아이디는 6자 이상이어야 합니다.");
 			location.href="javascript:parent.fnPageMove('mypage/join_new.jsp')";
 		</script>
 <%

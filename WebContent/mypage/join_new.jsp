@@ -11,38 +11,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script src="js/jquery-3.1.1.min.js"></script>
-<script>
-$( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#user_Id" ).autocomplete({
-      source: availableTags
-    });
-  } );
-</script>
-
 <style>
 h1, h2, h3, h4, h5, h6{
 	color:#3d4449;
@@ -62,7 +30,7 @@ strong, b{
 <strong style="font-size:100px; color:indianred; font-weight:1000;"> ** 신규 회원 가입 ** </strong>
 <br/><br/><br/><br/>
 
-<form method="post" action="javascript:parent.fnPageMove('mypage/join_new_proc.jsp')">
+<form method="post" id="join" action="javascript:parent.fnPageMove('mypage/join_new_proc.jsp', '#join')">
 	<div style="display:flex;">
 		<div style="flex:1"><strong style="font-size:18px; color:darkblue;">ID</strong></div>
 		<div style="flex:4"><input type="text" name="user_Id" id="user_Id" placeholder="ID"/></div>

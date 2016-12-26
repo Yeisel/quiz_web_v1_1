@@ -6,10 +6,39 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 <script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/ajax.js"></script>
 <script>
-	function fnPageMove(page){
-		$("#here").load(page);
+	function fnPageMove(page, id){
+		$("#here").load(page, $(id).serialize());
 	}
+/*
+	function fnPageMove(page){
+		sendRequest("GET", $("#here").load(page), callback, param);
+		sendRequest.send();
+		// $("#here").load(page);
+	}
+	
+	function callback(){
+		if((httpRequest.readyState) == 4){
+			if((httpRequest.status) == 200){
+				sendRequest.send();
+			}
+			else{
+				alert(httpRequest.status);
+			}
+		}
+	}
+*/
+/*
+	
+		xhttp.onreadystatechange = function() {
+		  if (this.readyState == 4 && this.status == 200) {
+			  alert("function fnPageMove(page)");
+		  }
+		};
+		xhttp.open("GET", function fnPageMove(page){$("#here").load(page);}, true);
+		xhttp.send();
+*/
 </script>
 <link rel="stylesheet" href="assets/css/main.css" />
 <style>
