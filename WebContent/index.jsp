@@ -1,4 +1,6 @@
+<%@page import="java.util.List"%>
 <%@page import="prjdata.QuizUserDTO"%>
+
 <%@ page contentType="text/html; charset=utf-8"%>
 <!DOCTYPE html>
 <html>
@@ -78,6 +80,7 @@ strong, b{
 
 <%
 	dto = dao.getUser(request, (String)request.getSession().getAttribute("logged"));
+	List list = dao.getRank();
 %>
 
 		<!-- Wrapper -->
@@ -101,15 +104,47 @@ strong, b{
 								<section id="banner">
 									<div class="here" id="here">
 									<header>
-										<span class="image object" style="float:right;">
-											<img src="images/pic10.jpg" alt="" />
-										</span>	
-										<h2>QuizBook에 오신 것을 환영합니다.<br />
-										by FirstClass Team</h2>
-	
+										<div class="here" id="here" style="display:flex;">
+											<div style="float:left; flex:4;">					
+												<strong style="font-size:30px; color:black;">QuizBook에 오신 것을 환영합니다.<br/>
+											by FirstClass Team</strong>
+											</div>
+											<div style="float:right; flex:6;">
+												<table class="table table-bordered">
+													<tr style="background-color:pink;">
+													  <td><strong style="font-size:17px; color:black;">순위</strong></td>
+													  <td><strong style="font-size:17px; color:black;">이 달의 RANK!!</strong></td>
+													  <td><strong style="font-size:17px; color:black;">아이디</strong></td>
+													  <td><strong style="font-size:17px; color:black;">획득 포인트</strong></td>
+													</tr>
+<%											
+											for(int i=0; i<5; i++){
+												QuizUserDTO dto2 = (QuizUserDTO)list.get(i);
+%>
+													<tr>
+														<td><%=i%></td>
+														<td>
+														<%
+														for(int j=i;j<5;j++){
+														%>
+														<img style="width:30px;height:30px;" src="images/star.png"/>
+														<%
+														}
+														%>
+														</td>
+														<td><%=dto2.getUser_Id()%></td>
+														<td><%=dto2.getUser_Month_Point()%></td>
+													</tr>
+<%
+											}
+%>					
+												</table>
+												
+											</div>
+										</div>
 										<!-- <p>다양한 퀴즈에 도전해보세요</p> -->
 									</header>
-																		
+									
 									<p>다양한 퀴즈에 도전하여, <br>명예의 전당에 이름을 올려보세요</p>
 									
 									<ul class="actions">

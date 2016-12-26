@@ -196,7 +196,7 @@ public class MainProc extends HttpServlet {
 		}
 	}
 
-	// 석준 DB 로그인
+	// DB 로그인
 	public MainProc(){
 		try{
 			Context ctx = new InitialContext();
@@ -397,6 +397,44 @@ public class MainProc extends HttpServlet {
 				freeConnection();
 			}
 			return list;			
+		}
+		
+		// 랭크
+		public ArrayList getRank(){
+			
+			ArrayList list = new ArrayList();
+			
+			try {
+				con = ds.getConnection();
+				
+				String sql = "select * from user order by user_Month_Point desc";
+				pstmt = con.prepareStatement(sql);  
+								
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					QuizUserDTO dto = new QuizUserDTO();
+					
+					dto.setUser_Id(rs.getString("user_Id"));
+					dto.setUser_Email(rs.getString("user_Email"));
+					dto.setUser_Password(rs.getString("user_Password"));
+					dto.setUser_Name(rs.getString("user_Name"));
+					dto.setUser_Address(rs.getString("user_Address"));
+					dto.setUser_Phone_Number(rs.getString("user_Phone_Number"));
+					dto.setUser_Total_Point(rs.getInt("user_Total_Point"));
+					dto.setUser_Current_Point(rs.getInt("user_Current_Point"));
+					dto.setUser_Month_Point(rs.getInt("user_Month_Point"));
+					
+					list.add(dto);
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally{
+				freeConnection();
+			}
+			return list;
 		}
 	
 	// 인스턴스 클로즈 메서드
