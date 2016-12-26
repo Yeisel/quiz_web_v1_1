@@ -7,29 +7,28 @@
 </head>
 <body>
 <jsp:useBean id="dao" class="prjbean.MainProc"/>
-<jsp:useBean id="dto" class="prjdata.QuizProductDTO"/>
-<jsp:setProperty property="*" name="dto"/>  
-getpro : <jsp:getProperty property="product_Name" name="dto"/>
 
-안녕
 <%
 	request.setCharacterEncoding("UTF-8");
 	String key1 = request.getParameter("delete");
 	String key2 = request.getParameter("choiceBuy");
 	String key3 = request.getParameter("allBuy");
-	String key4 = request.getParameter("userId");
-	String key5 = request.getParameter("test");
-	String key6 = request.getParameter("test1");
+	String[] product_Number = request.getParameterValues("product_number");
+	String userId = (String)session.getAttribute("logged");
 
-	System.out.println(key1);
-	System.out.println(key2);
-	System.out.println(key3);
-	System.out.println(key4);
-	System.out.println(key5);
-	System.out.println(key6);
-	System.out.println(request.getParameter("test1"));
+	if(key1 != null){
+		dao.deleteCart(product_Number, userId);
+	}
+	else if(key2 != null){
+		System.out.println("선택구매");
+	}
+	else if(key3 != null){
+		System.out.println("전체구매");
+	}
+
+	
 	
 %>
-<%=key4%>
+
 </body>
 </html>
