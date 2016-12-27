@@ -8,6 +8,7 @@
 </head>
 <body>
 <%request.setCharacterEncoding("utf-8");%>
+<%response.setContentType("text/html;charset=UTF-8");%>
 
 <jsp:useBean id="dao" class="prjbean.MainProc"></jsp:useBean>
 <jsp:useBean id="dto" class="prjdata.QuizUserDTO"></jsp:useBean>
@@ -17,7 +18,8 @@
 <%
 	System.out.println("request.getParameter(policy) : " + request.getParameter("policy"));
 	System.out.println("request.getParameter(user_Id) : " + request.getParameter("user_Id"));
-	System.out.println("dto.getUser_Id() : " + dto.getUser_Id());	
+	System.out.println("request.getParameter(user_Name) : " + request.getParameter("user_Name"));
+	System.out.println("dto.getUser_Id() : " + dto.getUser_Id());
 
 	if(request.getParameter("user_Id").length() > 4){
 		if(dto.getUser_Password().equals(request.getParameter("pass_confirm"))){

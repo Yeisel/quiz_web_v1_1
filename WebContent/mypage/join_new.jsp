@@ -5,11 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>신규 회원 가입</title>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script src="js/jquery-3.1.1.min.js"></script>
 <style>
 h1, h2, h3, h4, h5, h6{
@@ -27,6 +22,9 @@ strong, b{
 </style>
 </head>
 <body>
+<%request.setCharacterEncoding("utf-8");%>
+<%response.setContentType("text/html;charset=UTF-8");%>
+
 <strong style="font-size:100px; color:indianred; font-weight:1000;"> ** 신규 회원 가입 ** </strong>
 <br/><br/><br/><br/>
 

@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
+encoding//WebContent/index.jsp=UTF-8
 encoding//WebContent/mypage/buy_history.jsp=UTF-8
 encoding//WebContent/mypage/join_new.jsp=UTF-8
 encoding//WebContent/mypage/join_new_proc.jsp=UTF-8
 encoding//WebContent/mypage/quiz_history.jsp=UTF-8
+encoding//src/prjbean/MainProc.java=UTF-8

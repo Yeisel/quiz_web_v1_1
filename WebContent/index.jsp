@@ -1,11 +1,12 @@
 <%@page import="java.util.List"%>
 <%@page import="prjdata.QuizUserDTO"%>
 
-<%@ page contentType="text/html; charset=utf-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="ko">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/ajax.js"></script>
@@ -74,6 +75,7 @@ strong, b{
 </head>
 	<body>
 	<%request.setCharacterEncoding("utf-8");%>
+	<%response.setContentType("text/html;charset=UTF-8");%>
 	
 	<jsp:useBean id="dao" class="prjbean.MainProc"></jsp:useBean>
 	<jsp:useBean id="dto" class="prjdata.QuizUserDTO"></jsp:useBean>

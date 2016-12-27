@@ -26,26 +26,26 @@ public class MainProc extends HttpServlet {
 	HttpSession session = null;
 	RequestDispatcher dispatcher = null;
 	
-	// ·Î±×ÀÎ ÇÁ·Î¼¼½º (index.jsp)
+	// ë¡œê·¸ì¸ í”„ë¡œì„¸ìŠ¤ (index.jsp)
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
 	}
 
-	// ·Î±×ÀÎ ÇÁ·Î¼¼½º (index.jsp)
+	// ë¡œê·¸ì¸ í”„ë¡œì„¸ìŠ¤ (index.jsp)
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String userId = (String)req.getParameter("user_Id");            // index.jspÀÇ text name="user_Id"
-		String prepareId = null;										// °ü¸®ÀÚÀÎÁö ±¸º°À» À§ÇÑ º¯¼ö
-		String userPw = (String)req.getParameter("user_Pw");            // index.jspÀÇ text name="user_Pw"
-		String guest = "guest";											// logout ±¸º°À» À§ÇÑ º¯¼ö
-		String sql = null;												// sql query¿ë º¯¼ö
+		String userId = (String)req.getParameter("user_Id");            // index.jsp text name="user_Id"
+		String prepareId = null;										// ê´€ë¦¬ìì¸ì§€ êµ¬ë³„ì„ ìœ„í•œ ë³€ìˆ˜
+		String userPw = (String)req.getParameter("user_Pw");            // index.jspì˜ text name="user_Pw"
+		String guest = "guest";											// logout êµ¬ë³„ì„ ìœ„í•œ ë³€ìˆ˜
+		String sql = null;												// sql queryìš© ë³€ìˆ˜
 		
 		System.out.println("doPost userId : " + userId);
 		
 		if(userId != null){
-			System.out.println("¿©±â´Â if(userId != null)");
+			System.out.println("ì—¬ê¸°ëŠ” if(userId != null)");
 			if(userId.length() > 4){
 				System.out.println("if(userId.length() > 4)");
 				prepareId = userId.substring(0, 5);
@@ -66,7 +66,7 @@ public class MainProc extends HttpServlet {
 			System.out.println("prepareId : " + prepareId);
 			
 			if(prepareId.equals("minda")){
-				System.out.println("¿©±â´Â prepareId minda");
+				System.out.println("ì—¬ê¸°ëŠ” prepareId minda");
 			}
 			else if(prepareId.equals("admin")){
 				sql = "select * from admin where admin_Id='" + userId + "'";
@@ -77,7 +77,7 @@ public class MainProc extends HttpServlet {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()){
-					System.out.println("¿©±â´Â admin rs ³Ø½ºÆ®");
+					System.out.println("ì—¬ê¸°ëŠ” admin rs ë„¥ìŠ¤íŠ¸");
 					
 					dto.setAdmin_Id(rs.getString("admin_Id"));
 					dto.setAdmin_Password(rs.getString("admin_Password"));
@@ -96,7 +96,7 @@ public class MainProc extends HttpServlet {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()){
-					System.out.println("¿©±â´Â user rs ³Ø½ºÆ®");
+					System.out.println("ì—¬ê¸°ëŠ” user rs ë„¥ìŠ¤íŠ¸");
 					
 					dto.setUser_Id(rs.getString("user_Id"));
 					dto.setUser_Password(rs.getString("user_Password"));
@@ -112,54 +112,54 @@ public class MainProc extends HttpServlet {
 		dispatcher = req.getRequestDispatcher("index.jsp");
 		
 		if(session.getAttribute("logged") == null){			
-			System.out.println("¿©±â´Â ¼¼¼Ç ³Î : " + session.getAttribute("logged"));
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ : " + session.getAttribute("logged"));
 			
 			if(req.getParameter("user_Id") == "" && req.getParameter("user_Pw") == ""){				
-				System.out.println("¿©±â´Â id pw °ø¹é : " + req.getParameter("user_Id") + ", " + req.getParameter("user_Pw"));
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ id pw ï¿½ï¿½ï¿½ï¿½ : " + req.getParameter("user_Id") + ", " + req.getParameter("user_Pw"));
 				dispatcher.forward(req, resp);
 			}
 			else if(req.getParameter("user_Id") != null && req.getParameter("user_Pw") != null){				
-				System.out.println("¿©±â´Â id pw ³´³Î : " + req.getParameter("user_Id") + ", " + req.getParameter("user_Pw"));				
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ id pw ï¿½ï¿½ï¿½ï¿½ : " + req.getParameter("user_Id") + ", " + req.getParameter("user_Pw"));				
 				System.out.println("userId , userPw : " + userId + ", " + userPw);				
 				
 				if(session.getAttribute("admin").equals(userId)){
 					if(rs.getString("admin_Id").equals(userId) && rs.getString("admin_Password").equals(userPw)){
-						System.out.println("¿©±â´Â admin ·Î±ä ¼º°ø");
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ admin ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½");
 						session.setAttribute("admin", userId);
 						session.setAttribute("logged", userId);
 						dispatcher.forward(req, resp);
 					}
 					else if(guest.equals(req.getParameter("logout"))){
-						System.out.println("¿©±â´Â admin ·Î±×¾Æ¿ô");
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ admin ï¿½Î±×¾Æ¿ï¿½");
 						session.invalidate();
 						dispatcher.forward(req, resp);
 					}
 					else{
-						System.out.println("¿©±â´Â admin ºñÈ¸¿ø");
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ admin ï¿½ï¿½È¸ï¿½ï¿½");
 						session.invalidate();
 						dispatcher.forward(req, resp);
 					}
 				}
 				else{
 					if(rs.getString("user_Id").equals(userId) && rs.getString("user_Password").equals(userPw)){
-						System.out.println("¿©±â´Â user ·Î±ä ¼º°ø");
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ user ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½");
 						session.setAttribute("logged", userId);
 						dispatcher.forward(req, resp);
 					}				
 					else if(guest.equals(req.getParameter("logout"))){
-						System.out.println("¿©±â´Â user ·Î±×¾Æ¿ô");
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ user ï¿½Î±×¾Æ¿ï¿½");
 						session.invalidate();
 						dispatcher.forward(req, resp);
 					}
 					else{
-						System.out.println("¿©±â´Â user ºñÈ¸¿ø");
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ user ï¿½ï¿½È¸ï¿½ï¿½");
 						session.invalidate();
 						dispatcher.forward(req, resp);
 					}
 				}
 			}
 			else{
-				System.out.println("¿©±â´Â id pw °ø¹éÀÇ else");
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ id pw ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ else");
 				
 				dispatcher.forward(req, resp);		
 			}
@@ -168,16 +168,16 @@ public class MainProc extends HttpServlet {
 			System.out.println(userId + ", " + session.getAttribute("logged"));
 			
 			if(guest.equals(req.getParameter("logout"))){
-				System.out.println("¿©±â´Â ¼¼¼Ç ³´³ÎÀÇ guest.equals = " + req.getParameter("logout"));
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ guest.equals = " + req.getParameter("logout"));
 				session.invalidate();
 				dispatcher.forward(req, resp);
 			}
 			else if(userId.equals(session.getAttribute("logged"))){
-				System.out.println("¿©±â´Â userId.equals(logged) = " + session.getAttribute("logged"));
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ userId.equals(logged) = " + session.getAttribute("logged"));
 				dispatcher.forward(req, resp);
 			}
 			else{
-				System.out.println("¿©±â´Â guest.equalsÀÇ else = " + req.getParameter("logout"));
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ guest.equalsï¿½ï¿½ else = " + req.getParameter("logout"));
 				dispatcher.forward(req, resp);
 			}
 		}
@@ -185,7 +185,7 @@ public class MainProc extends HttpServlet {
 			
 		}
 		
-		} // try ´İÀ½
+		} // try close
 		catch(Exception err){
 			err.printStackTrace();
 		}
@@ -196,7 +196,7 @@ public class MainProc extends HttpServlet {
 		}
 	}
 
-	// DB ·Î±×ÀÎ
+	// DB ì—°ê²°
 	public MainProc(){
 		try{
 			Context ctx = new InitialContext();
@@ -206,14 +206,14 @@ public class MainProc extends HttpServlet {
 			con = ds.getConnection();
 		}
 		catch(Exception err){
-			System.out.println("DB ¿¬°á ½ÇÆĞ" + err);
+			System.out.println("DB ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½" + err);
 		}
 		finally{
 			
 		}
 	}
 	
-	// Æ¯Á¤ userÀÇ DB °ª ²¨³»¿À±â
+	// íŠ¹ì • userë¥¼ DB ì—ì„œ ê°€ì ¸ì˜¤ê¸°
 	public QuizUserDTO getUser(HttpServletRequest req, String user_Name){
 		
 		QuizUserDTO dto = new QuizUserDTO();
@@ -250,13 +250,13 @@ public class MainProc extends HttpServlet {
 		return dto;
 	}
 	
-	// È¸¿ø Á¤º¸ ¼öÁ¤(mypage/replace_user_info.jsp, mypage/replace_user_proc.jsp)
+	// íšŒì› ì •ë³´ ìˆ˜ì • (mypage/replace_user_info.jsp, mypage/replace_user_proc.jsp)
 	public void replaceUser(QuizUserDTO dto){
 		
 		try{
 			con = ds.getConnection();
 			
-			System.out.println("¿©±â´Â replaceUser(QuizUserDTO dto) : " + dto.getUser_Email() + ", " + dto.getUser_Password() + ", " +  dto.getUser_Id());
+			System.out.println("ì—¬ê¸°ëŠ” replaceUser(QuizUserDTO dto) : " + dto.getUser_Email() + ", " + dto.getUser_Password() + ", " +  dto.getUser_Id());
 			
 			String sql = "UPDATE user SET user_email=?, user_password=?, user_address=?, user_phone_number=? WHERE user_id=?";
 			
@@ -278,7 +278,7 @@ public class MainProc extends HttpServlet {
 		}
 	}
 	
-	// Å×½ºÆ®(º¯°æÇØµµ µÊ)
+	// ì˜ˆì œ(ìˆ˜ì •í•´ë„ ë¨)
 	public void selectUser(String user_Name){
 		
 		try {
@@ -310,7 +310,7 @@ public class MainProc extends HttpServlet {
 		}
 	}
 	
-	// Å×½ºÆ®(º¯°æÇØµµ µÊ)
+	// ì˜ˆì œ(ìˆ˜ì •í•´ë„ ë¨)
 	public void selectProduct(String product_Name){
 		try {
 			con = ds.getConnection();
@@ -336,7 +336,7 @@ public class MainProc extends HttpServlet {
 		}
 	}
 	
-	// ½Å±Ô°¡ÀÔ(mypage/join_new.jsp)
+	// íšŒì› ê°€ì… (mypage/join_new.jsp)
 	public void inputNewUser(QuizUserDTO dto){
 		System.out.println("inputNewUser(QuizUserDTO dto) : ");
 		
@@ -364,80 +364,102 @@ public class MainProc extends HttpServlet {
 		}
 	}
 	
-	// shop ¸ŞÀÎ »óÇ°¸ñ·Ï ºÒ·¯¿À±â
-		public ArrayList getProductList(){
+	// íšŒì› ì‚­ì œ(fix_user.jsp)
+	public void deleteUser(String user_Id){
+		try{
+			con = ds.getConnection();
 			
-			ArrayList list = new ArrayList();
-			String sql = null;
-			sql = "select * from product";
+			System.out.println("deleteUser(String user_Id) : " + user_Id);
 			
-			try {
-				con = ds.getConnection();
-				pstmt = con.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				
-				while(rs.next()){
-					QuizProductDTO dto = new QuizProductDTO();
-					
-					dto.setProduct_Number(rs.getInt("product_Number"));
-					dto.setProduct_Name(rs.getString("product_Name"));
-					dto.setProduct_Price(rs.getInt("product_Price"));
-					dto.setProduct_Image(rs.getString("product_Image"));
-					dto.setProduct_Stock(rs.getInt("product_Stock"));
-					dto.setProduct_Company(rs.getString("product_Company"));
-					dto.setProduct_Contents(rs.getString("product_Contents"));
-
-					list.add(dto);
-				}
-				
-			} catch (SQLException err) {
-				System.out.println("getBoardList() : " + err);
-			}
-			finally{
-				freeConnection();
-			}
-			return list;			
+			String sql = "DELETE FROM user WHERE user_Id=?"; 
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user_Id);
+			
+			pstmt.executeUpdate();
 		}
-		
-		// ·©Å©
-		public ArrayList getRank(){
-			
-			ArrayList list = new ArrayList();
-			
-			try {
-				con = ds.getConnection();
-				
-				String sql = "select * from user order by user_Month_Point desc";
-				pstmt = con.prepareStatement(sql);  
-								
-				rs = pstmt.executeQuery();
-				
-				while(rs.next()){
-					QuizUserDTO dto = new QuizUserDTO();
-					
-					dto.setUser_Id(rs.getString("user_Id"));
-					dto.setUser_Email(rs.getString("user_Email"));
-					dto.setUser_Password(rs.getString("user_Password"));
-					dto.setUser_Name(rs.getString("user_Name"));
-					dto.setUser_Address(rs.getString("user_Address"));
-					dto.setUser_Phone_Number(rs.getString("user_Phone_Number"));
-					dto.setUser_Total_Point(rs.getInt("user_Total_Point"));
-					dto.setUser_Current_Point(rs.getInt("user_Current_Point"));
-					dto.setUser_Month_Point(rs.getInt("user_Month_Point"));
-					
-					list.add(dto);
-				}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-			finally{
-				freeConnection();
-			}
-			return list;
+		catch(Exception err){
+			err.printStackTrace();
 		}
+		finally{
+			freeConnection();
+		}
+	}
 	
-	// ÀÎ½ºÅÏ½º Å¬·ÎÁî ¸Ş¼­µå
+	// shop 
+	public ArrayList getProductList(){
+			
+		ArrayList list = new ArrayList();
+		String sql = null;
+		sql = "select * from product";
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				QuizProductDTO dto = new QuizProductDTO();
+				
+				dto.setProduct_Number(rs.getInt("product_Number"));
+				dto.setProduct_Name(rs.getString("product_Name"));
+				dto.setProduct_Price(rs.getInt("product_Price"));
+				dto.setProduct_Image(rs.getString("product_Image"));
+				dto.setProduct_Stock(rs.getInt("product_Stock"));
+				dto.setProduct_Company(rs.getString("product_Company"));
+				dto.setProduct_Contents(rs.getString("product_Contents"));
+
+				list.add(dto);
+			}
+			
+		} catch (SQLException err) {
+			System.out.println("getBoardList() : " + err);
+		}
+		finally{
+			freeConnection();
+		}
+		return list;			
+	}
+	
+	// ë­í¬
+	public ArrayList getRank(){
+		
+		ArrayList list = new ArrayList();
+		
+		try {
+			con = ds.getConnection();
+			
+			String sql = "select * from user order by user_Month_Point desc";
+			pstmt = con.prepareStatement(sql);  
+							
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				QuizUserDTO dto = new QuizUserDTO();
+				
+				dto.setUser_Id(rs.getString("user_Id"));
+				dto.setUser_Email(rs.getString("user_Email"));
+				dto.setUser_Password(rs.getString("user_Password"));
+				dto.setUser_Name(rs.getString("user_Name"));
+				dto.setUser_Address(rs.getString("user_Address"));
+				dto.setUser_Phone_Number(rs.getString("user_Phone_Number"));
+				dto.setUser_Total_Point(rs.getInt("user_Total_Point"));
+				dto.setUser_Current_Point(rs.getInt("user_Current_Point"));
+				dto.setUser_Month_Point(rs.getInt("user_Month_Point"));
+				
+				list.add(dto);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			freeConnection();
+		}
+		return list;
+	}
+	
+	// DB ì—°ê²° ëŠê¸°
 	public void freeConnection(){
 		if(rs != null){try{rs.close();}catch(Exception err){}}
 		if(pstmt != null){try{pstmt.close();}catch(Exception err){}}
