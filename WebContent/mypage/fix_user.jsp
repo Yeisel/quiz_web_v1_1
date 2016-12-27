@@ -9,11 +9,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 <script src="js/jquery-3.1.1.min.js"></script>
-<script>
-	function fnFixUser(){
-		
-	}
-</script>
 </head>
 <body>
 <%request.setCharacterEncoding("utf-8");%>

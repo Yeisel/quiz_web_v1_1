@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import prjdata.QuizAdminDTO;
+import prjdata.QuizBuyDTO;
 import prjdata.QuizProductDTO;
 import prjdata.QuizUserDTO;
 
@@ -419,6 +420,44 @@ public class MainProc extends HttpServlet {
 			freeConnection();
 		}
 		return list;			
+	}
+	
+	// 구매 내역 조회.
+	public ArrayList getBuy(String user_Name){
+		
+		ArrayList list = new ArrayList();
+		
+		try {
+			con = ds.getConnection();
+			
+			String sql = "select * from buy where buy_id = ? order by buy_date desc";
+			pstmt = con.prepareStatement(sql);  
+			pstmt.setString(1, user_Name);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				QuizBuyDTO dto = new QuizBuyDTO();
+				
+				dto.setBuy_Number(rs.getString("buy_number"));
+				dto.setBuy_Id(rs.getString("buy_id"));
+				dto.setBuy_Date(rs.getString("buy_date"));
+				dto.setBuy_Product_Number(rs.getInt("buy_product_number"));
+				dto.setBuy_Amount(rs.getInt("buy_amount"));
+				dto.setBuy_Progress(rs.getString("buy_progress"));
+				dto.setBuy_Price(rs.getInt("buy_price"));
+				dto.setBuy_Invoice(rs.getString("buy_invoice"));
+				
+				list.add(dto);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			freeConnection();
+		}
+		return list;
 	}
 	
 	// 랭크
