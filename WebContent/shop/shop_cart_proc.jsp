@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -10,25 +10,16 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
 	String key1 = request.getParameter("delete");
-	String key2 = request.getParameter("choiceBuy");
-	String key3 = request.getParameter("allBuy");
 	String[] product_Number = request.getParameterValues("product_number");
 	String userId = (String)session.getAttribute("logged");
-
-	if(key1 != null){
-		dao.deleteCart(product_Number, userId);
-	}
-	else if(key2 != null){
-		System.out.println("선택구매");
-	}
-	else if(key3 != null){
-		System.out.println("전체구매");
-	}
-
-	
-	
+	dao.deleteCart(product_Number, userId);
 %>
+<script>
+	alert("상품 삭제 되었습니다.");
+	location.href="javascript:parent.fnPageMove('shop/shop_cart.jsp')";
+</script>
 
 </body>
 </html>

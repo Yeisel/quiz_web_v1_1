@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
 
@@ -14,6 +14,7 @@
 <jsp:useBean id="dao" class="prjbean.MainProc"/>
 <%
 	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
 	List list = dao.getProductList();
 %>
 	
@@ -63,6 +64,12 @@
 %>	  
             </a>
           </div>
-
+		<div style="margin-top:20px; display:flex">
+			<div style="flex:1"><a href="index.jsp"><input type="button" value="처음으로" /></a></div>
+			<div style="flex:1"><a href="javascript:fnPageMove('shop/shop_detail.jsp')"><input type="button" value="상품목록"></a></div>
+			<div style="flex:4"></div>
+			<div style="flex:1"><input type="submit" value="결제하기" style="float:right"></a></div>
+			<div style="flex:1"><input type="button" value="취소하기" style="float:right"></a></div>
+		</div>
 	</body>
 </html>

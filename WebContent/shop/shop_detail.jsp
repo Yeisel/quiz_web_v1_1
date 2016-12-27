@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
 </head>
@@ -11,6 +11,7 @@
 <jsp:useBean id="dao" class="prjbean.MainProc"/>
 <%
 	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
 	int product_Number = Integer.parseInt(request.getParameter("product_Number"));
 	System.out.println(product_Number);
 	QuizProductDTO dto = dao.getProduct(product_Number);
@@ -48,7 +49,7 @@
 	
 <script>
 	function fnBack(){
-		history.back();
+		location.href="javascript:parent.fnPageMove('shop/shop_cart.jsp')";
 	}
 	function fnCart(){
 		var id = document.getElementById("session").value;

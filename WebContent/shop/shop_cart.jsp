@@ -1,13 +1,26 @@
 <%@page import="prjdata.QuizUserDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="prjdata.QuizProductDTO"%>
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Language" content="ko">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script>
+	function fnAll(){
+		$("input:checkbox").attr("checked", true);
+		
+		fnChoice();
+	}
+	
+	function fnClear(){
+		$("input:checkbox").attr("checked", false);
+		
+	}
+	
+
 	function fnChoice(){
 		var count;
 		var price;
@@ -17,15 +30,20 @@
 			function(i) {
 			  pnum = $(this).val();
 			  count = $(this).parent().next().next().next().children().val();
-			  price = $(this).parent().next().next().next().next().text();
+			  price = $(this).parent().next().next().next().next().children().text();
+			  
 			  sum += parseInt(count)*parseInt(price);
 			  product += String(pnum) + "/" + String(count) + "/"  + String(price) + "/";
+			  // alert(price);
 			  
 		});
-		alert(product);
+		// alert(product);
+		
 		$("#buySum1").text(sum);
 		$("#buySum2").text(sum);
 		$("#productTmp").val(product);
+		
+		alert("화면 아래쪽에 포인트 확인해주시고, 배송지 입력후에 '결제하기' 버튼을 눌러주세요");
 	}
 </script>
 </head>
@@ -33,11 +51,17 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
+	response.setContentType("text/html;charset=UTF-8");
 	String id = (String)session.getAttribute("logged");
 	System.out.println("userId = " + id);
-	int pnum = Integer.parseInt(request.getParameter("product_Number"));
-	Boolean bool = dao.compareCart(id, pnum);
-	if(bool == false){dao.insertCart(id, pnum);}
+	if(request.getParameter("product_Number")!=null){
+		int pnum = Integer.parseInt(request.getParameter("product_Number"));
+		Boolean bool = dao.compareCart(id, pnum);
+		if(bool == false){dao.insertCart(id, pnum);}
+	}
+	else{
+		System.out.println("구매후 넘어옴");
+	}
 	List list = dao.getCart(id);
 	QuizUserDTO userdto = (QuizUserDTO)request.getAttribute("dto");
 	int point = dao.getUserPoint(id);
@@ -46,7 +70,7 @@
 		<div class="sTitwrap">
 			<h3 class="cp_intit">장바구니</h3>
 			<input type="text" name="userId" value="<%=id %>"/>
-			<input type="text" name="pnum" value="<%=pnum %>"/>
+			
 		</div>
 		
 		<div style="display:flex; background-color:rgba(230, 235, 237, 0.25);border: solid 1px rgba(210, 215, 217, 0.75)">
@@ -60,7 +84,7 @@
 					<div style="flex:1;">배송비</div>
 				
 		</div>
-		<form method="post" action="shop/shop_cart_proc.jsp">
+		<form id="cart" action="javascript:fnPageMove('shop/shop_cart_proc.jsp', '#cart')">
 		
 <%
 		for(int i=0; i<list.size(); i++){
@@ -72,8 +96,8 @@
 					<div align="center" style="flex:1; "><input type="checkbox" name="product_number" id="check<%=i%>" value="<%=dto.getProduct_Number()%>"/><label for="check<%=i%>" ></label></div>
 					<div style="flex:1; "><input type="hidden" name="product_image" value=<%=dto.getProduct_Image()%>/><img src=<%=dto.getProduct_Image()%> style="width:90px;height:50px;"></img></div>
 					<div style="flex:3"><input type="hidden" name="product_name" value="<%=dto.getProduct_Name()%>"/><%=dto.getProduct_Name()%></div>
-					<div style="flex:1" id="count1" name="count1" value="count"><input type="text" id="count<%=i+10%>" name="count" placeholder="수량입력" required="required"></input></div>
-					<div style="flex:1" id="product_price" value=<%=dto.getProduct_Price()%>><%=dto.getProduct_Price()%> </div>
+					<div style="flex:1" id="count1" name="count1" value="count"><input type="text" id="count" name="count" value="1" ></input></div>
+					<div style="flex:1" ><intput type="hidden" ><%=dto.getProduct_Price()%></intput> </div>
 					<div style="flex:1"></div>
 					<div style="flex:1.5"></div>
 					<div style="flex:1"></div>
@@ -84,6 +108,7 @@
 			<input type="submit" name="delete" value="삭제하기"/>
 			<a href="javascript:fnChoice()"><input type="button" name="choiceBuy" value="선택주문"/></a>
 			<a href="javascript:fnAll()"><input type="button" name="allBuy" value="전체주문"/></a>
+			<a href="javascript:fnClear()"><input type="button" name="allBuy" value="선택해제"/></a>
 		</form>
 		
 		<br/>
@@ -106,7 +131,7 @@
 		</div>
 		<br/><br/>
 		<h3 class="sTitwrap">배송지 정보 입력</h3>
-		<form action="shop/shop_buy_proc.jsp">
+		<form id="cartpage" action="javascript:fnPageMove('shop/shop_buy_proc.jsp', '#cartpage')">
 		<table class="alt">
 			<tbody>
 				<tr>

@@ -1,15 +1,20 @@
+<%@page import="java.util.List"%>
 <%@page import="prjdata.QuizUserDTO"%>
-<%@ page contentType="text/html; charset=utf-8"%>
+
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="ko">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="js/jquery-3.1.1.min.js"></script>
+
 <script>
-	function fnPageMove(page){
-		$("#here").load(page);
+	function fnPageMove(page, id){
+		$("#here").load(page, $(id).serialize());
 	}
+
 </script>
 <link rel="stylesheet" href="assets/css/main.css" />
 <style>
@@ -42,6 +47,16 @@ strong, b{
 </style>
 </head>
 	<body>
+	<%request.setCharacterEncoding("utf-8");%>
+	<%response.setContentType("text/html;charset=UTF-8");%>
+	
+	<jsp:useBean id="dao" class="prjbean.MainProc"></jsp:useBean>
+	<jsp:useBean id="dto" class="prjdata.QuizUserDTO"></jsp:useBean>
+
+<%
+	dto = dao.getUser(request, (String)request.getSession().getAttribute("logged"));
+	List list = dao.getRank();
+%>
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -52,32 +67,70 @@ strong, b{
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.jsp" class="logo"><strong style="font-size:60px;">QuizBook</strong></a>
+									<form method="post" action="login.do" name="logo">
+										<input type="hidden" name="user_Id" value="<%=session.getAttribute("logged")%>"/>
+										<input type="hidden" name="home" value="<%=session.getAttribute("logged")%>"/>
+										<input type="image" name="Submit" src="images/quizbook.jpg">
+										<!-- <a href="login.do" onclick="$(this).closest('logo').submit()" class="logo"><strong style="font-size:60px;">QuizBook</strong></a> -->
+									</form>
 								</header>
-	
+
 							<!-- Banner -->
-								<section >
-									<div class="here" id="here">
+							<div class="here" id="here">
+								<section id="banner">
+									
 									<header>
-										<span class="image object" style="float:right;">
-											<img src="images/pic10.jpg" alt="이미지" />
-										</span>	
-										<h2>QuizBook에 오신 것을 환영합니다.<br/>
-										by FirstClass Team</h2>
-	
+										<div class="here" id="here" style="display:flex;">
+											<div style="float:left; flex:4;">					
+												<strong style="font-size:30px; color:black;">QuizBook에 오신 것을 환영합니다.<br/>
+											by FirstClass Team</strong>
+											</div>
+											<div style="float:right; flex:6;">
+												<table class="table table-bordered">
+													<tr style="background-color:pink;">
+													  <td><strong style="font-size:17px; color:black;">순위</strong></td>
+													  <td><strong style="font-size:17px; color:black;">이 달의 RANK!!</strong></td>
+													  <td><strong style="font-size:17px; color:black;">아이디</strong></td>
+													  <td><strong style="font-size:17px; color:black;">획득 포인트</strong></td>
+													</tr>
+<%											
+											for(int i=0; i<5; i++){
+												QuizUserDTO dto2 = (QuizUserDTO)list.get(i);
+%>
+													<tr>
+														<td><%=i%></td>
+														<td>
+														<%
+														for(int j=i;j<5;j++){
+														%>
+														<img style="width:30px;height:30px;" src="images/star.png"/>
+														<%
+														}
+														%>
+														</td>
+														<td><%=dto2.getUser_Id()%></td>
+														<td><%=dto2.getUser_Month_Point()%></td>
+													</tr>
+<%
+											}
+%>					
+												</table>
+												
+											</div>
+										</div>
 										<!-- <p>다양한 퀴즈에 도전해보세요</p> -->
 									</header>
-																		
+									
 									<p>다양한 퀴즈에 도전하여, <br>명예의 전당에 이름을 올려보세요</p>
 									
 									<ul class="actions">
 									<li><a href="javascript:fnPageMove('quiz/quiz_main.jsp')" class="button big">퀴즈도전</a></li>
 									</ul>
 
-									</div>
+									
 									
 								</section>
-
+							</div>
 							
 							<!-- Section -->
 								
@@ -93,30 +146,41 @@ strong, b{
 
 								<section id="login" class="alt">
 <%         
-			QuizUserDTO dto = (QuizUserDTO)request.getAttribute("dto");
+			// QuizUserDTO dto = (QuizUserDTO)request.getAttribute("dto");
 			
 			if(session.getAttribute("logged") == null){
 %>	
-									<form method="post" action="login.do">
-										<input type="text" name="user_Id" id="user_Id" placeholder="Id" />
-										<input type="password" name="user_Pw" id="user_Pw" placeholder="Password" /><br/>
-										<button type="submit"><strong style="font-size:13px; color:red;">로그인</strong></button>
-									</form>
-									<a href="javascript:fnPageMove('mypage/join_new.jsp')" class="button"><strong style="font-size:13px; color:gray;">회원가입</strong></a>
+				<form method="post" action="login.do">
+					<input type="text" name="user_Id" id="user_Id" placeholder="Id" />
+					<input type="password" name="user_Pw" id="user_Pw" placeholder="Password" /><br/>
+					<button type="submit"><strong style="font-size:13px; color:red;">로그인</strong></button>
+				</form>
+				<a href="javascript:fnPageMove('mypage/join_new.jsp')" class="button"><strong style="font-size:13px; color:gray;">회원가입</strong></a>
 <%			
+			}
+			else if(session.getAttribute("admin").equals(session.getAttribute("logged"))){
+%>
+				<form method="post" action="login.do">
+					<input type="hidden" name="logout" value="guest"/>
+					빡씨게 일해라! 관리자 &nbsp;<strong style="font-size:25px;font-weight:1000px"><%=session.getAttribute("admin")%></strong> 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+					<button type="submit"><strong style="font-size:13px; color:red;">로그아웃</strong></button>
+					<a href="javascript:fnPageMove('mypage/admin_main.jsp')" class="button"><strong style="font-size:13px; color:red;">관리자페이지</strong></a><br/>
+					<br/>
+				</form>
+<%
 			}
 			else{
 %>					
-					<form method="post" action="login.do">
-						<input type="hidden" name="logout" value="guest"/>
-						<strong style="font-size:25px;font-weight:1000px"><%=session.getAttribute("logged")%></strong> 님 어서오세요!!
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
-						<button type="submit"><strong style="font-size:13px; color:red;">로그아웃</strong></button>
-						<a href="javascript:fnPageMove('mypage/my_main.jsp')" class="button"><strong style="font-size:13px; color:red;">마이페이지</strong></a><br/>
-						<br/>
-						보유포인트 : <%=dto.getUser_Current_Point()%>
-						
-					</form>
+				<form method="post" action="login.do">
+					<input type="hidden" name="logout" value="guest"/>
+					<strong style="font-size:25px;font-weight:1000px"><%=session.getAttribute("logged")%></strong> 님 어서오세요!!
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+					<button type="submit"><strong style="font-size:13px; color:red;">로그아웃</strong></button>
+					<a href="javascript:fnPageMove('mypage/my_main.jsp')" class="button"><strong style="font-size:13px; color:red;">마이페이지</strong></a><br/>
+					<br/>
+					보유포인트 : <%=dto.getUser_Current_Point()%>
+				</form>
 <%
 			}
 %>									
