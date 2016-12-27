@@ -12,17 +12,16 @@
 </head>
 <body>
 <%request.setCharacterEncoding("utf-8");%>
-<%response.setContentType("text/html;charset=UTF-8");%>
 
 <%
 	MainProc dao = new MainProc();
 %>
 	<script>
-		var yn = confirm("정말 삭제 하시것슴미까?");
+		var yn = confirm("정말 삭제 하시것슴?");
 		if(yn == true){
 	
 <%
-	dao.deleteUser(request.getParameter("user_Id"));
+	dao.deleteUser(request.getParameter("user"));
 	System.out.println("여기는 dao.deleteUser");
 %>
 			alert("정말 삭제 되었습니다.")

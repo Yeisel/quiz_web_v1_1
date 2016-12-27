@@ -9,6 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 <script src="js/jquery-3.1.1.min.js"></script>
+<script>
+	function fnFixUser(){
+		
+	}
+</script>
 </head>
 <body>
 <%request.setCharacterEncoding("utf-8");%>
@@ -56,8 +61,8 @@
 %>
 	</tr>
 </table>
-<form method="post" action="javascript:parent.fnPageMove('mypage/fix_user.jsp', '#user_Id')">
-	<input type="hidden" name="user_Id" id="user_Id" value="<%=dto.getUser_Id()%>"/>
+<form method="post" action="javascript:parent.fnPageMove('mypage/fix_user_proc.jsp', '#user')">
+	<input type="hidden" name="user" id="user" value="<%=dto.getUser_Id()%>"/>
 	<div style="display:flex;">
 		<div style="flex:5"></div>
 		<div style="flex:4"></div>
